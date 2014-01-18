@@ -1,5 +1,4 @@
-package Square;
-
+package com.example.gca2014;
 /**
  *
  * @author Geoff
@@ -12,12 +11,8 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
-import Ables.Drawable;
-import Ables.Positionable;
 import android.util.Log;
 
-import com.example.astrobridge.GLRenderer;
-import com.example.astrobridge.Panel;
 //new version
 public class Square implements Drawable, Positionable{
     protected int mX=0;
@@ -69,13 +64,14 @@ public class Square implements Drawable, Positionable{
 	private FloatBuffer vertexBuffer;	// buffer holding the vertices
 
 	protected float vertices[] = {
-			-.5f, -.5f,  0.0f,		// V1 - bottom left
-			-.5f,  .5f,  0.0f,		// V2 - top left
-			 .5f, -.5f,  0.0f,		// V3 - bottom right
-			 .5f,  .5f,  0.0f,		// V4 - top right
+			-1.5f, -1.5f,  0.0f,		// V1 - bottom left
+			-1.5f,  1.5f,  0.0f,		// V2 - top left
+			 1.5f, -1.5f,  0.0f,		// V3 - bottom right
+			 1.5f,  1.5f,  0.0f,		// V4 - top right
                         
 	};
 	protected int mTexture=0;
+	private boolean isVisible = true;
 	public int textureIndex(){
 		return mTexture;
 	}
@@ -97,14 +93,14 @@ public class Square implements Drawable, Positionable{
 
 		if(x!=0){
 			mX+=y;
-			float tX = ((float)x);//*sizeFactor/glConvert;
+			float tX = ((float)x)*3f;//*sizeFactor/glConvert;
             for(int m=0;m<4;m++){
             	vertices[m*3+1]+=tX;
             }
        }
 		if(y!=0){
 			mY+=x;
-			float tY = ((float)y);//*sizeFactor/glConvert;
+			float tY = ((float)y)*3f;//*sizeFactor/glConvert;
 			for(int m=0;m<4;m++){
 				vertices[m*3]+=tY;
 			}
@@ -133,11 +129,12 @@ public class Square implements Drawable, Positionable{
 				((Square)O).vertices[1]==vertices[1];
 	}
 	/** The draw method for the square with the GL context */
-	public void draw(GL10 gl) {     
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
-
-		
-		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);		
+	public void draw(GL10 gl) {
+		if(isVisible )
+		{
+		  gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+		  gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		}
 	}
 	public boolean isBomb(){
 		return false;
@@ -147,5 +144,8 @@ public class Square implements Drawable, Positionable{
 	}
 	public boolean isPowerup(){
 		return false;
+	}
+	public void setVisible(boolean b) {
+		isVisible = b;
 	}
 }

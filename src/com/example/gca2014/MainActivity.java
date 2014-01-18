@@ -1,4 +1,4 @@
-package com.example.astrobridge;
+package com.example.gca2014;
 
 import android.app.Activity;
 import android.media.MediaPlayer;

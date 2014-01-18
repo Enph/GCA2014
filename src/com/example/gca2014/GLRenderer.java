@@ -1,4 +1,4 @@
-package com.example.astrobridge;
+package com.example.gca2014;
  
 
 import java.nio.ByteBuffer;
@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import Ables.Animatable;
-import Ables.Drawable;
-import Square.Square;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,8 +18,10 @@ import android.graphics.Rect;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 import android.opengl.GLUtils;
+import android.os.Build;
 import android.util.Log;
 
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class GLRenderer implements Renderer {
 	private MainActivity 	context;
 	public static float mWidth=400;
