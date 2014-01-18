@@ -11,12 +11,11 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import agency.Position;
 import android.util.Log;
 
 //new version
-public class Square implements Drawable, Positionable{
-    protected int mX=0;
-    protected int mY=0;
+public class Square extends Position implements Drawable{
    // public static float sizeFactor=32f;
    // public static float glConvert =200f;
   //  public static float xWidth=GLRenderer.mWidth/sizeFactor;
@@ -24,12 +23,6 @@ public class Square implements Drawable, Positionable{
     public final static String LOG_TAG = "astrobridge: ";
     public int xvel=0,yvel=1;
     public Panel pane;
-    public int getX(){
-        return mX;
-    }
-    public int getY(){
-        return mY;
-    }
     static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
     static public float texture[] = {
     		// Mapping coordinates for the vertices
@@ -76,15 +69,15 @@ public class Square implements Drawable, Positionable{
 		return mTexture;
 	}
 	public Square(int x, int y, int t,Panel pane) {
-
+		super(x,y);
 		this.pane = pane;
 		move(x,y);
 		mTexture=t;
 	}
 
     public Square(Square s) {
-    
-    	move(s.mX,s.mY);
+    	super(s.getX(),s.getY());
+    	move(s.getX(),s.getY());
     	mTexture = s.mTexture;
     }
     
@@ -92,7 +85,7 @@ public class Square implements Drawable, Positionable{
     public void move(int x, int y){
 
 		if(x!=0){
-			mX+=y;
+			setY(getY()+y);
 			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
             for(int m=0;m<4;m++){
             	vertices[m*3+1]+=tX;
@@ -112,6 +105,7 @@ public class Square implements Drawable, Positionable{
 		vertexBuffer.put(vertices);
 		vertexBuffer.position(0);
 	}
+	
 	public void relocate(int x, int y){
 		mX=0;
 		mY=0;

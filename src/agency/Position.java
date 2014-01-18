@@ -17,7 +17,12 @@ public class Position {
 	public boolean isObstacle() {
 		return obstacle;
 	}
-	
+	public void setX(int i) {
+		x = i;
+	}
+	public void setY(int i) {
+		y = i;
+	}
 	public int getX(){
 		return x; 
 	}
