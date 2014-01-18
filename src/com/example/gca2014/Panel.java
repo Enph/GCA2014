@@ -29,7 +29,6 @@ public class Panel extends GLSurfaceView implements
     public double chanceOfObstacle = 0.1f;
     public double chanceOfAsteroid = 0.01f;
     public boolean initialized;
-    public LevelSettings currentLevel=new LevelSettings("pluto");
     public int leftbound=-10,rightbound=10,topbound=8,botbound=-8;
     Random rnd = new Random();
     public boolean running=true;
