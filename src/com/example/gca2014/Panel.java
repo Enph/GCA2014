@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Random;
 
 import android.annotation.TargetApi;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Looper;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -61,11 +64,12 @@ public class Panel extends GLSurfaceView implements
     }
     
     Panel self = this;
-    
+
+	List<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
     Thread t1 = new Thread(new Runnable(){
-    	public void run()
+    	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+		public void run()
     	{
-    		List<ArrayList<Square>> squares = new ArrayList<ArrayList<Square>>();
     		for(int i=-2;i<3;++i)
     		{
     			squares.add(new ArrayList<Square>());
@@ -76,19 +80,17 @@ public class Panel extends GLSurfaceView implements
     	    		context.mRenderer.addDrawable(squares.get(i+2).get(j+4));
     			}
     		}
-    		for(int i=0;i<8;++i)
-    		{
-    			synchronized(context)
-    			{
-    				//squares.get(i+8).get(4).setVisible(true);
-    			}
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
-    		}
+    		
     	}
     });
     
+    public boolean onTouchEvent(MotionEvent e)
+	{
+    	
+    	int x = (int)(e.getX()*9f/self.getWidth());
+    	int y = (int)(e.getY()*5f/self.getHeight());
+    	squares.get(y).get(x);
+		return initialized;
+	}
     
 }
