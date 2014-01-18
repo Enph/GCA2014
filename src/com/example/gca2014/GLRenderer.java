@@ -262,4 +262,9 @@ public class GLRenderer implements Renderer {
     		itr+=dir;
         }
     }
+	public void clear(Integer... is) {
+		for(Integer i:is){
+			mDraws.get(i).clear();
+		}
+	}
 }

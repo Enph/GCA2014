@@ -22,7 +22,6 @@ public class Square extends Position implements Drawable{
    // public static float yHeight=GLRenderer.mHeight/sizeFactor;
     public final static String LOG_TAG = "astrobridge: ";
     public int xvel=0,yvel=1;
-    public Panel pane;
     static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
     static public float texture[] = {
     		// Mapping coordinates for the vertices
@@ -64,40 +63,49 @@ public class Square extends Position implements Drawable{
                         
 	};
 	protected int mTexture=0;
-	private boolean isVisible = true;
+	private boolean isVisible = false;
 	public int textureIndex(){
 		return mTexture;
 	}
-	public Square(int x, int y, int t,Panel pane) {
-		super(x,y);
-		this.pane = pane;
+	public void setTextureIndex(int i){
+		mTexture = i;
+	}
+	public Square(int x, int y, int t) {
+		super(4,3);
 		move(x,y);
 		mTexture=t;
 	}
 
     public Square(Square s) {
-    	super(s.getX(),s.getY());
+    	super(0,0);
     	move(s.getX(),s.getY());
     	mTexture = s.mTexture;
     }
     
  
-    public void move(int x, int y){
+    public Square(Square square, int x, int y) {
+    	super(4,3);
+		move(x,y);
+		isVisible = square.isVisible;
+		mTexture = square.mTexture;
+	}
+	public void move(int x, int y){
 
 		if(x!=0){
-			setY(getY()+y);
 			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
             for(int m=0;m<4;m++){
             	vertices[m*3+1]+=tX;
             }
        }
 		if(y!=0){
-			mY+=x;
 			float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
 			for(int m=0;m<4;m++){
 				vertices[m*3]+=tY;
 			}
 		}
+
+		setX(getX()+x);
+		setY(getY()+y);
 		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
 		byteBuffer.order(ByteOrder.nativeOrder());
 		vertexBuffer = byteBuffer.asFloatBuffer();
@@ -107,8 +115,8 @@ public class Square extends Position implements Drawable{
 	}
 	
 	public void relocate(int x, int y){
-		mX=0;
-		mY=0;
+		setX(0);
+		setY(0);
 		vertices = new float[]{
 			-.5f, -.5f,  0.0f,		// V1 - bottom left
 			-.5f,  .5f,  0.0f,		// V2 - top left
