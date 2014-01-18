@@ -11,10 +11,11 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import agency.Position;
 import android.util.Log;
 
 //new version
-public class Square implements Drawable, Positionable{
+public class Square extends Position implements Drawable {
     protected int mX=0;
     protected int mY=0;
    // public static float sizeFactor=32f;
@@ -76,15 +77,15 @@ public class Square implements Drawable, Positionable{
 		return mTexture;
 	}
 	public Square(int x, int y, int t,Panel pane) {
-
+		super(x,y);
 		this.pane = pane;
 		move(x,y);
 		mTexture=t;
 	}
 
     public Square(Square s) {
-    
-    	move(s.mX,s.mY);
+    	super(s.x,s.y);
+    	move(s.x,s.y);
     	mTexture = s.mTexture;
     }
     

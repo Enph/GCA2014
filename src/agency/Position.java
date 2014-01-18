@@ -1,8 +1,8 @@
 package agency;
 
 public class Position {
-	public int x;
-	public int y;
+	private int x;
+	private int y;
 	private boolean obstacle;
 	public Position(int x, int y){
 		this.x = x;
@@ -16,6 +16,13 @@ public class Position {
 	
 	public boolean isObstacle() {
 		return obstacle;
+	}
+	
+	public int getX(){
+		return x; 
+	}
+	public int getY(){
+		return y;
 	}
 	@Override
 	public boolean equals(Object o){

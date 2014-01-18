@@ -16,21 +16,21 @@ public class Agent {
 	private boolean failed;
 	private Maze maze;
 	private int trail;
-	public Agent(String name, int i, int j, Maze maze) {
-		this.name = name;
+	public Agent() {
+		
+	}
+	public boolean possible(int i, int j,Maze maze, Position goal){
 		this.maze = maze;
 		this.trail = 0;
 		paths = new TreeSet<Path>();
 		finished = false;
-		Path start = new Path(maze);
+		Path start = new Path(maze,goal);
 		Move startMove = new Move(i,j, maze);
 		start.add(startMove);
 		paths.add(start);
 		previousMoves.add(startMove);
 		this.name+=startMove.toString();
 		failed = false;
-	}
-	public boolean possible(Maze maze, Position goal){
 		while(!failed&&!finished){
 			step(goal);
 		}

@@ -7,7 +7,6 @@ import java.util.List;
 
 public class Maze extends ArrayList<ArrayList<Position>> implements Comparable<Maze>{
 	private static final long serialVersionUID = -4974919269738609258L;
-	private Position goal;
 	private static int width=30;
 	private static int height=30;
 	private int length = 0;
@@ -15,32 +14,32 @@ public class Maze extends ArrayList<ArrayList<Position>> implements Comparable<M
 	public Maze(boolean generate) {
 		super(width);
 	}
-	public int getCost(Path path) {
+	public int getCost(Path path, Position goal) {
 		int cost = 0;
-		int x = path.getLast().x;
-		int y = path.getLast().y;
-		while(y<goal.y){
+		int x = path.getLast().getX();
+		int y = path.getLast().getY();
+		while(y<goal.getY()){
 			++y;
 			++cost;
 			if(get(x,y).isObstacle()){
 				++cost;
 			}
 		}
-		while(y>goal.y){
+		while(y>goal.getY()){
 			--y;
 			++cost;
 			if(get(x,y).isObstacle()){
 				++cost;
 			}
 		}
-		while(x<goal.x){
+		while(x<goal.getX()){
 			++x;
 			++cost;
 			if(get(x,y).isObstacle()){
 				++cost;
 			}
 		}
-		while(x>goal.x){
+		while(x>goal.getX()){
 			--x;
 			++cost;
 			if(get(x,y).isObstacle()){
@@ -57,9 +56,6 @@ public class Maze extends ArrayList<ArrayList<Position>> implements Comparable<M
 	}
 	public int getHeight() {
 		return height;
-	}
-	public Position getGoal() {
-		return goal;
 	}
 	@Override
 	public int compareTo(Maze maze) {

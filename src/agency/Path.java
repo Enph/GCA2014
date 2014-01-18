@@ -6,12 +6,13 @@ import java.util.LinkedList;
 
 public class Path extends LinkedList<Move> implements Comparable<Path>, Cloneable {
 	private static final long serialVersionUID = 7146761845482530502L;
-
 	private Maze maze;
+	private Position goal;
 	
-	public Path(Maze maze){
+	public Path(Maze maze, Position goal){
 		super();
 		this.maze = maze;
+		this.goal = goal;
 	}
 	
 	@Override
@@ -24,7 +25,7 @@ public class Path extends LinkedList<Move> implements Comparable<Path>, Cloneabl
 	}
 	
 	public int cost(){
-		return maze.getCost(this)+this.size();
+		return maze.getCost(this,goal)+this.size();
 	}
 	
 	public int numberOfObstaclesHit(){
@@ -38,7 +39,7 @@ public class Path extends LinkedList<Move> implements Comparable<Path>, Cloneabl
 	}
 	
 	public Path clone(){
-		Path path = new Path(maze);
+		Path path = new Path(maze, goal);
 		path.addAll(this);
 		return path;
 	}

@@ -11,7 +11,7 @@ public class Move extends Position {
 	}
 
 	public Move(Position position, Maze maze) {
-		super(position.x,position.y);
+		super(position.getX(),position.getY());
 		if(position.isObstacle()){
 			obstacle();
 		}
@@ -19,31 +19,31 @@ public class Move extends Position {
 	}
 
 	public Move east() {
-		if(x+1>=maze.getWidth()||maze.get(x+1,y).isObstacle()){
+		if(getX()+1>=maze.getWidth()||maze.get(getX()+1,getY()).isObstacle()){
 			return null;
 		}
-		return new Move(maze.get(x+1,y),maze);
+		return new Move(maze.get(getX()+1,getY()),maze);
 	}
 	public Move west() {
-		if(x-1<0||maze.get(x-1,y).isObstacle()){
+		if(getX()-1<0||maze.get(getX()-1,getY()).isObstacle()){
 			return null;
 		}
-		return new Move(maze.get(x-1,y),maze);
+		return new Move(maze.get(getX()-1,getY()),maze);
 	}
 	public Move north() {
-		if(y+1>=maze.getHeight()||maze.get(x,y+1).isObstacle()){
+		if(getY()+1>=maze.getHeight()||maze.get(getX(),getY()+1).isObstacle()){
 			return null;
 		}
-		return new Move(maze.get(x,y+1),maze);
+		return new Move(maze.get(getX(),getY()+1),maze);
 	}
 	public Move south() {
-		if(y-1<0||maze.get(x,y-1).isObstacle()){
+		if(getY()-1<0||maze.get(getX(),getY()-1).isObstacle()){
 			return null;
 		}
-		return new Move(maze.get(x,y-1),maze);
+		return new Move(maze.get(getX(),getY()-1),maze);
 	}
 	
 	public String toString(){  
-		return "("+(x)+","+(y)+")";
+		return "("+getX()+","+getY()+")";
 	}
 }
