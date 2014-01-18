@@ -77,9 +77,9 @@ public class Hall extends ArrayList<Square> {
 		}
 		for(int j=ax;j!=bx;j+=dirx)
 		{
-			Square square = panel.maze.get(ay).get(j);
+			Square square = panel.maze.get(by).get(j);
 			for(Room room:rooms){
-				if(room.within(j, ay)){
+				if(room.within(by, j)||room.within(by+1, j)||room.within(by-1, j)){
 					return true;
 				}
 
