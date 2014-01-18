@@ -6,6 +6,8 @@ import java.nio.FloatBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.microedition.khronos.opengles.GL10;
+
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
@@ -55,9 +57,5 @@ public abstract class Spell implements com.example.gca2014.Drawable{
 	}
 	public int textureIndex(){
 		return texture;
-	}
-	
-	public boolean getSelected(){
-		return selected;
 	}
 }

@@ -3,7 +3,7 @@ package agency;
 public class Position {
 	private int x;
 	private int y;
-	private boolean obstacle;
+	private boolean obstacle = false;
 	public Position(int x, int y){
 		this.x = x;
 		this.y = y;

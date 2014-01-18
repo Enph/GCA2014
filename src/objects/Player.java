@@ -7,19 +7,22 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 import spells.Light;
+import spells.Spell;
+import spells.Spellbook;
 
 import com.example.gca2014.Drawable;
+import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 import agency.Position;
 import android.util.Log;
 
-public class Character extends Position implements Drawable{
+public class Player extends Position implements Drawable{
 	
 	private int index;
-	private SpellBook book;
+	private Spellbook book;
 
-	public Character(Square position, int index) {
+	public Player(Square position, int index) {
 		super(position.getX(),position.getY());
 		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
 		byteBuffer.order(ByteOrder.nativeOrder());
@@ -31,7 +34,7 @@ public class Character extends Position implements Drawable{
 		setY(getY()-1);
 		setX(getX()+1);
 		this.index = index;
-		this.book = new SpellBook();
+		this.book = new Spellbook();
 		Spell light = new Light();
 		this.book.add(light);
 		this.book.setSelected(light);
@@ -89,6 +92,10 @@ public class Character extends Position implements Drawable{
 	
 	public void setTextureIndex(int index){
 		this.index = index;
+	}
+
+	public void cast(Square square, Panel panel) {
+		book.cast(square, panel);
 	}
 
 }

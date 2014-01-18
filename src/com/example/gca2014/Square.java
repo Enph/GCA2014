@@ -64,6 +64,7 @@ public class Square extends Position implements Drawable{
 	};
 	protected int mTexture=0;
 	private boolean isVisible = false;
+	
 	public int textureIndex(){
 		return mTexture;
 	}
@@ -80,6 +81,9 @@ public class Square extends Position implements Drawable{
     	super(0,0);
     	move(s.getX(),s.getY());
     	mTexture = s.mTexture;
+    	if(s.isObstacle()){
+			this.obstacle();
+		}
     }
     
  
@@ -88,6 +92,9 @@ public class Square extends Position implements Drawable{
 		move(x,y);
 		isVisible = square.isVisible;
 		mTexture = square.mTexture;
+		if(square.isObstacle()){
+			this.obstacle();
+		}
 	}
 	public void move(int x, int y){
 
@@ -137,15 +144,6 @@ public class Square extends Position implements Drawable{
 		  gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		  gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
 		}
-	}
-	public boolean isBomb(){
-		return false;
-	}
-	public boolean isObstacle(){
-		return false;
-	}
-	public boolean isPowerup(){
-		return false;
 	}
 	public void setVisible(boolean b) {
 		isVisible = b;

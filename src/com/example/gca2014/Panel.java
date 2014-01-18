@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import mapgeneration.Generator;
+
 import android.annotation.TargetApi;
 import android.graphics.Point;
 import android.opengl.GLSurfaceView;
@@ -39,7 +41,7 @@ SurfaceHolder.Callback {
 	Random rnd = new Random();
 	public boolean running=true;
 
-	public objects.Character lyden;
+	public objects.Player lyden;
 
 
 
@@ -56,7 +58,7 @@ SurfaceHolder.Callback {
 
 
 	public void setup(){
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarebase, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarebase, context);//0
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square1low, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square2low, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square3low, context);
@@ -65,7 +67,7 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square6low, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square7low, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square8low, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square9low, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square9low, context);//9
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square1high, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square2high, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square3high, context);
@@ -75,7 +77,7 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square7high, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square8high, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.square9high, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarenormalhigh, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarenormalhigh, context);//19
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarenormalmid, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarenormallow, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarestonehigh, context);
@@ -85,30 +87,39 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squaregrass3, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squaregrass4, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squaregrass5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squaregrass6, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squaregrass6, context);//29
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater1, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater2, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater3, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater4, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall1, context);//34
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall2, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall3, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall4, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside2, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteback, context);
-		
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);//39
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside, context);//43
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside2, context);//44
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteback, context);//45
+
 		/*
     	//context.mRenderer.loadGLTexture(com.example.astrobridge.R.drawable.astronaut, context);
     	context.mRenderer.blitGLTexture(com.example.astrobridge.R.drawable.astronauts, context);
 		 */
-		t1.start();
+		run();
 		ready=true;
 	}
 
 	Panel self = this;
 
-	int height = 10;
-	int width = 18;
+	int height = 20;
+	int width = 20;
 	List<ArrayList<Square>> view = new ArrayList<ArrayList<Square>>();
-	List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
-	Thread t1 = new Thread(new Runnable(){
+	public List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
+	
 		@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 		public void run()
 		{
@@ -121,7 +132,7 @@ SurfaceHolder.Callback {
 				}
 			}
 			Square position = maze.get(4-3).get(4);
-			lyden = new objects.Character(position,36);
+			lyden = new objects.Player(position,45);
 			position.setVisible(true);
 			/*
 			maze.get(4-2).get(3).setVisible(true);
@@ -142,7 +153,7 @@ SurfaceHolder.Callback {
 			maze.get(4-4).get(4).setTextureIndex(8);
 			maze.get(4-4).get(5).setVisible(true);
 			maze.get(4-4).get(5).setTextureIndex(9);
-			*/
+			 */
 			/*
 			maze.get(4-2).get(3).setVisible(true);
 			maze.get(4-2).get(3).setTextureIndex(10);
@@ -162,12 +173,12 @@ SurfaceHolder.Callback {
 			maze.get(4-4).get(4).setTextureIndex(17);
 			maze.get(4-4).get(5).setVisible(true);
 			maze.get(4-4).get(5).setTextureIndex(18);
-			*/
-			
+			 */
+			Generator gen = new Generator();
+			gen.generate(this);
 			resetView();
 			context.mRenderer.addDrawable(lyden);
 		}
-	});
 
 	int dragStartX = 0;
 	int dragStartY = 0;
@@ -176,17 +187,17 @@ SurfaceHolder.Callback {
 	int viewX = 0;
 	int viewY = 0;
 	int viewHeight = 5;
-	int viewWidth = 9;
+	int viewWidth = 8;
 
 	public void resetView(){
-		for(int i = 0; i<35;i++){
+		for(int i = 0; i<43;i++){
 			context.mRenderer.clear(i);
 		}
 		view.clear();
 		for(int i=-2;i<3;++i)
 		{
 			view.add(new ArrayList<Square>());
-			for(int j=-4;j<5;++j)
+			for(int j=-4;j<4;++j)
 			{
 				Square square = new Square(maze.get(i+2+viewY).get(j+4+viewX),i,j);
 				view.get(i+2).add(square);
@@ -213,51 +224,67 @@ SurfaceHolder.Callback {
 			int endY = (int)(e.getY()*5f/self.getHeight());
 			if((startX != endX || startY != endY)){
 				double theta = Math.atan2((e.getY()-dragStartY),(e.getX()-dragStartX));
-				Log.d("",""+(lyden.getY())+";"+viewY);
+
+
 				if(theta<Math.PI/4&&theta>=-Math.PI/4){
-					if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
-					{
-						viewX+=1;
-						resetView();
+					if(lyden.getX()<viewWidth-1 && !view.get(4-lyden.getY()).get(lyden.getX()+1).isObstacle()){
+						if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
+						{
+							viewX+=1;
+							resetView();
+						}
+						else if(lyden.getX()<viewWidth-1) {
+							lyden.move(1,0);
+						}
 					}
-					else if(lyden.getX()<viewWidth-1) {
-						
-						lyden.move(1,0);
-					}
-					
+					context.mRenderer.clear(lyden.textureIndex());
+					lyden.setTextureIndex(44);
+					context.mRenderer.addDrawable(lyden);
 				}
 				else if(theta<Math.PI*3/4&&theta>=Math.PI/4){
-					if(lyden.getY()+1==viewHeight-1&&viewY>0)
-					{
-						viewY-=1;
-						resetView();
+					if(lyden.getY()<viewHeight-1 && !view.get(4-(lyden.getY()+1)).get(lyden.getX()).isObstacle()){
+						if(lyden.getY()+1==viewHeight-1&&viewY>0)
+						{
+							viewY-=1;
+							resetView();
+						}
+						else if(lyden.getY()<viewHeight-1) {
+							lyden.move(0,1);
+						}
 					}
-					else if(lyden.getY()<viewHeight-1) {
-						
-						lyden.move(0,1);
-					}
+					context.mRenderer.clear(lyden.textureIndex());
+					lyden.setTextureIndex(45);
+					context.mRenderer.addDrawable(lyden);
 				}
 				else if(theta<-Math.PI*1/4&&theta>=-Math.PI*3/4){
-					if(lyden.getY()-1==0&&viewY+viewHeight<height)
-					{
-						viewY+=1;
-						resetView();
+					if(lyden.getY()>0 && !view.get(4-(lyden.getY()-1)).get(lyden.getX()).isObstacle()){
+						if(lyden.getY()-1==0&&viewY+viewHeight<height)
+						{
+							viewY+=1;
+							resetView();
+						}
+						else if(lyden.getY()>0) {
+							lyden.move(0,-1);
+						}
 					}
-					else if(lyden.getY()>0) {
-						
-						lyden.move(0,-1);
-					}
+					context.mRenderer.clear(lyden.textureIndex());
+					lyden.setTextureIndex(45);
+					context.mRenderer.addDrawable(lyden);
 				}
 				else {
-					if(lyden.getX()-1==0&&viewX>0)
-					{
-						viewX-=1;
-						resetView();
+					if( lyden.getX()>0&&!view.get(4-lyden.getY()).get(lyden.getX()-1).isObstacle()){
+						if(lyden.getX()-1==0&&viewX>0)
+						{
+							viewX-=1;
+							resetView();
+						}
+						else if(lyden.getX()>0) {
+							lyden.move(-1,0);
+						}
 					}
-					else if(lyden.getX()>0) {
-						
-						lyden.move(-1,0);
-					}
+					context.mRenderer.clear(lyden.textureIndex());
+					lyden.setTextureIndex(43);
+					context.mRenderer.addDrawable(lyden);
 				}
 
 			}
@@ -267,20 +294,24 @@ SurfaceHolder.Callback {
 				int dy = lyden.getY()-startY;
 				if((dx==1||dx==-1)&&dy==0)
 				{
-					Log.d("click","x");
-					maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
-
+					//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
+					lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
 					context.mRenderer.clear(lyden.textureIndex());
-					lyden.setTextureIndex(35);
+					if(dx==1){
+						lyden.setTextureIndex(43);
+					}
+					else{
+						lyden.setTextureIndex(44);
+					}
 					context.mRenderer.addDrawable(lyden);
 				}
 				else
 					if((dy==1||dy==-1)&&dx==0)
 					{
 						maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
-						
+
 						context.mRenderer.clear(lyden.textureIndex());
-						lyden.setTextureIndex(35);
+						lyden.setTextureIndex(45);
 						context.mRenderer.addDrawable(lyden);
 					}
 				resetView();
@@ -288,6 +319,11 @@ SurfaceHolder.Callback {
 		}
 		return true;
 
+	}
+
+
+	public objects.Player getLyden() {
+		return lyden;
 	}
 
 }
