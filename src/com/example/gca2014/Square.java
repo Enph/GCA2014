@@ -64,10 +64,10 @@ public class Square implements Drawable, Positionable{
 	private FloatBuffer vertexBuffer;	// buffer holding the vertices
 
 	protected float vertices[] = {
-			-1.5f, -1.5f,  0.0f,		// V1 - bottom left
-			-1.5f,  1.5f,  0.0f,		// V2 - top left
-			 1.5f, -1.5f,  0.0f,		// V3 - bottom right
-			 1.5f,  1.5f,  0.0f,		// V4 - top right
+			-0.075f, -0.075f,  0.0f,		// V1 - bottom left
+			-0.075f,  0.075f,  0.0f,		// V2 - top left
+			 0.075f, -0.075f,  0.0f,		// V3 - bottom right
+			 0.075f,  0.075f,  0.0f,		// V4 - top right
                         
 	};
 	protected int mTexture=0;
@@ -93,14 +93,14 @@ public class Square implements Drawable, Positionable{
 
 		if(x!=0){
 			mX+=y;
-			float tX = ((float)x)*3f;//*sizeFactor/glConvert;
+			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
             for(int m=0;m<4;m++){
             	vertices[m*3+1]+=tX;
             }
        }
 		if(y!=0){
 			mY+=x;
-			float tY = ((float)y)*3f;//*sizeFactor/glConvert;
+			float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
 			for(int m=0;m<4;m++){
 				vertices[m*3]+=tY;
 			}

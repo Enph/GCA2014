@@ -41,7 +41,7 @@ public class GLRenderer implements Renderer {
 		gl.glLoadIdentity();
 
 		// Drawing
-		gl.glTranslatef(0.0f, 0.0f, -20.0f);		// move 5 units INTO the screen
+		gl.glTranslatef(0.0f, 0.0f, -0.9175f);		// move 5 units INTO the screen
 		synchronized(context){
 		display(gl);
 		}
@@ -67,7 +67,7 @@ public class GLRenderer implements Renderer {
 		gl.glLoadIdentity(); 					//Reset The Modelview Matrix
 	}
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {		
-		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(12 * 4);		
+		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(12 * 4);
 		byteBuffer.order(ByteOrder.nativeOrder());
 		Square.textureBuffer = byteBuffer.asFloatBuffer();
 		Square.textureBuffer.put(Square.texture);
