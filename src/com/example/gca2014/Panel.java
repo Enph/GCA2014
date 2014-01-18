@@ -90,6 +90,9 @@ public class Panel extends GLSurfaceView implements
     	int x = (int)(e.getX()*9f/self.getWidth());
     	int y = (int)(e.getY()*5f/self.getHeight());
     	squares.get(y).get(x);
+    	
+    	squares.get(4-y).get(x).setVisible(false);
+    	
 		return initialized;
 	}
     
