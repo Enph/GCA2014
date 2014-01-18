@@ -6,6 +6,8 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import spells.Light;
+
 import com.example.gca2014.Drawable;
 import com.example.gca2014.Square;
 
@@ -15,6 +17,7 @@ import android.util.Log;
 public class Character extends Position implements Drawable{
 	
 	private int index;
+	private SpellBook book;
 
 	public Character(Square position, int index) {
 		super(position.getX(),position.getY());
@@ -28,6 +31,10 @@ public class Character extends Position implements Drawable{
 		setY(getY()-1);
 		setX(getX()+1);
 		this.index = index;
+		this.book = new SpellBook();
+		Spell light = new Light();
+		this.book.add(light);
+		this.book.setSelected(light);
 	}
 	private FloatBuffer vertexBuffer;
 	static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
