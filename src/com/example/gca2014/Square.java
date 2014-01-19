@@ -155,7 +155,9 @@ public class Square extends Position implements Drawable{
 	
 	public void setObject(Obj object){
 		myobj = object;
-		object.setSquare(this);
+		if(object != null){
+			object.setSquare(this);
+		}
 	}
 	
 	public boolean getVisible(){

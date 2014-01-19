@@ -243,7 +243,7 @@ SurfaceHolder.Callback {
 							else if(lyden.getX()<viewWidth-1) {
 								lyden.move(1,0);
 								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-
+									lyden.darkness();
 								}
 							}
 						}
@@ -260,6 +260,9 @@ SurfaceHolder.Callback {
 							}
 							else if(lyden.getY()<viewHeight-1) {
 								lyden.move(0,1);
+								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+									lyden.darkness();
+								}
 							}
 						}
 						context.mRenderer.clear(lyden.textureIndex());
@@ -275,6 +278,9 @@ SurfaceHolder.Callback {
 							}
 							else if(lyden.getY()>0) {
 								lyden.move(0,-1);
+								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+									lyden.darkness();
+								}
 							}
 						}
 						context.mRenderer.clear(lyden.textureIndex());
@@ -290,6 +296,9 @@ SurfaceHolder.Callback {
 							}
 							else if(lyden.getX()>0) {
 								lyden.move(-1,0);
+								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+									lyden.darkness();
+								}
 							}
 						}
 						context.mRenderer.clear(lyden.textureIndex());
