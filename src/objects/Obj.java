@@ -83,12 +83,12 @@ public abstract class Obj implements Drawable {
 	
 	public void move(int x,int y, Panel panel){
 		
-		if(x!=0){
-			if(y!=0){
-				panel.getSquare(this.square.getX(), this.square.getY());
+		if(panel.getSquare(this.square.getX()+x, this.square.getY()+y).getObject() == null){
+			if(!panel.getSquare(this.square.getX()+x, this.square.getY()+y).isObstacle()){
+				panel.getSquare(this.square.getX(), this.square.getY()).setObject(null);
+				panel.getSquare(this.square.getX()+x, this.square.getY()+y).setObject(this);
 			}
-        }
-		
+		}	
 		
 	}
 
