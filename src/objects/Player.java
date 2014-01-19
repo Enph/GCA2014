@@ -22,6 +22,7 @@ public class Player extends Position implements Drawable{
 	private int index;
 	private Spellbook book;
 	private int health = 3;
+	private int facing = 1;
 
 	public Player(Square position, int index) {
 		super(position.getX(),position.getY());
@@ -105,6 +106,33 @@ public class Player extends Position implements Drawable{
 	
 	public void loseHealth(){
 		health--;
+		if(health==0){
+			
+		}
+	}
+	
+	public int getFacing(){
+		return facing;
+	}
+	
+	public void faceLeft(){
+		this.setTextureIndex(44);
+		facing = 4;
+	}
+	
+	public void faceRight(){
+		this.setTextureIndex(43);
+		facing = 2;
+	}
+
+	public void faceUp(){
+		this.setTextureIndex(45);
+		facing = 1;
+	}
+
+	public void faceDown(){
+		this.setTextureIndex(45);
+		facing = 3;
 	}
 
 }

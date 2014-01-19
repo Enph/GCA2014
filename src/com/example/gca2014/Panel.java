@@ -302,10 +302,10 @@ SurfaceHolder.Callback {
 					lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 					context.mRenderer.clear(lyden.textureIndex());
 					if(dx==1){
-						lyden.setTextureIndex(43);
+						lyden.faceRight();
 					}
 					else{
-						lyden.setTextureIndex(44);
+						lyden.faceLeft();
 					}
 					context.mRenderer.addDrawable(lyden);
 				}
@@ -315,7 +315,12 @@ SurfaceHolder.Callback {
 						lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
 						lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 						context.mRenderer.clear(lyden.textureIndex());
-						lyden.setTextureIndex(45);
+						if(dy==1){
+							lyden.faceUp();
+						}
+						else{
+							lyden.faceDown();
+						}
 						context.mRenderer.addDrawable(lyden);
 					}
 				resetView();
