@@ -66,13 +66,38 @@ public class Generator {
 		}
 		for(int i=0;i<walls.size();++i){
 			if(wallet.get(i)[0]-1>=0&&!panel.maze.get(wallet.get(i)[0]-1).get(wallet.get(i)[1]).isObstacle()){
-				//Log.d("at","i"+i+"j"+j);
-				walls.get(i).setObject(new Wall(44));
+				if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
+				{
+					walls.get(i).setObject(new Wall(43));
+				}
+				else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
+				{
+					walls.get(i).setObject(new Wall(45));
+				}
+				else {
+					walls.get(i).setObject(new Wall(44));
+				}
 			}
-			//Log.d("here",""+square.getY()+1+"  "+square.getX());
 			else if(wallet.get(i)[0]+1<20&&!panel.maze.get(wallet.get(i)[0]+1).get(wallet.get(i)[1]).isObstacle()){
-				
-				walls.get(i).setObject(new Wall(39));
+				if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
+				{
+					walls.get(i).setObject(new Wall(38));
+				}
+				else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
+				{
+					walls.get(i).setObject(new Wall(40));
+				}
+				else {
+					walls.get(i).setObject(new Wall(39));
+				}
+			}
+			else if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
+			{
+				walls.get(i).setObject(new Wall(41));
+			}
+			else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
+			{
+				walls.get(i).setObject(new Wall(42));
 			}
 		}
 		return rooms;

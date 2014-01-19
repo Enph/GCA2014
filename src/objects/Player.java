@@ -106,6 +106,7 @@ public class Player extends Position implements Drawable{
 	
 	public void loseHealth(){
 		health--;
+		Log.d("loooooooose","health");
 		if(health==0){
 			Log.d("Dead","Dead");
 		}
@@ -135,25 +136,33 @@ public class Player extends Position implements Drawable{
 		facing = 3;
 	}
 	
-	public void darkness(){
-		long startTime = System.nanoTime();
-		int currentX = this.getX();
-		int currentY = this.getY();
+	public void darkness(final Panel panel){
 		
-		while(currentX == this.getX() && currentY == this.getY()){
-			long endTime = System.nanoTime();
-			long elapsedTime = endTime - startTime; 
-		    double seconds = elapsedTime / 1.0E09;
-		    if(seconds >= 2){
-		    	this.loseHealth();
-		    	break;
-		    }
-		}
-		
-		if(currentX == this.getX() && currentY == this.getY()){
-			this.darkness();
-		}
-		
+	}
+	public class DarknessThread extends Thread {
+			int x;
+			int y;
+			int i;
+			int j;
+			Panel panel;
+			DarknessThread(int x, int y, Panel pane){
+				this.x = getX();
+				this.y = getY();
+				i=x;
+				j=y;
+				this.panel = pane;
+			}
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if(panel.maze.get(y).get(x)){
+					
+				}
+			};
 	}
 
 }
