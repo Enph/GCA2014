@@ -238,6 +238,9 @@ SurfaceHolder.Callback {
 						}
 						else if(lyden.getX()<viewWidth-1) {
 							lyden.move(1,0);
+							if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+								
+							}
 						}
 					}
 					context.mRenderer.clear(lyden.textureIndex());

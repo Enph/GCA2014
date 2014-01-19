@@ -107,7 +107,7 @@ public class Player extends Position implements Drawable{
 	public void loseHealth(){
 		health--;
 		if(health==0){
-			
+			Log.d("Dead","Dead");
 		}
 	}
 	
@@ -133,6 +133,27 @@ public class Player extends Position implements Drawable{
 	public void faceDown(){
 		this.setTextureIndex(45);
 		facing = 3;
+	}
+	
+	public void darkness(){
+		long startTime = System.nanoTime();
+		int currentX = this.getX();
+		int currentY = this.getY();
+		
+		while(currentX == this.getX() && currentY == this.getY()){
+			long endTime = System.nanoTime();
+			long elapsedTime = endTime - startTime; 
+		    double seconds = elapsedTime / 1.0E09;
+		    if(seconds >= 2){
+		    	this.loseHealth();
+		    	break;
+		    }
+		}
+		
+		if(currentX == this.getX() && currentY == this.getY()){
+			this.darkness();
+		}
+		
 	}
 
 }

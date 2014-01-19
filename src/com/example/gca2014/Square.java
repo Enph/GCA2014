@@ -160,4 +160,8 @@ public class Square extends Position implements Drawable{
 		myobj = object;
 	}
 	
+	public boolean getVisible(){
+		return isVisible;
+	}
+	
 }
