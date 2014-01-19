@@ -161,6 +161,13 @@ SurfaceHolder.Callback {
 		mazes.add(maze);
 		mustHaves.clear();
 		
+		//Yellow Room 4-8 sand floors
+		maze = this.mazesloop(4,8);
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null),new Crystal(true,10,null)));
+		gen.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
 		//Green Room 33-37
 		maze = this.mazesloop(33,37);
 		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null),new Crystal(true,12,null),new Crystal(true,13,null), new Crystal(true,14,null),new Wood()));
