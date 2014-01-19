@@ -71,5 +71,19 @@ public abstract class Obj implements Drawable {
 		Panel.context.mRenderer.removeDrawable(this);
 		this.square = square;
 	}
+	
+	public boolean burnable(){
+		return false;
+	}
+	
+	public void move(int x,int y, Panel panel){
+		if(x!=0){
+			panel(this.getSquare())
+        }
+		if(y!=0){
+			
+		}
+		
+	}
 
 }

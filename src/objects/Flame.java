@@ -19,21 +19,21 @@ public class Flame extends Obj {
 	
 	@Override
 	public void onStep(Square on, Panel panel) {
-		Player loc = panel.getLyden();
-		if(loc.getX()==on.getX() && loc.getY()==on.getY()){
-			loc.loseHealth();
+		Player lyden = panel.getLyden();
+		if(lyden.getX()==on.getX() && lyden.getY()==on.getY()){
+			lyden.loseHealth();
 			//move back 1 depending on facing
-			if(loc.getFacing()==1){
-				loc.move(0,-1);
+			if(lyden.getFacing()==1){
+				lyden.move(0,-1);
 			}
-			if(loc.getFacing()==2){
-				loc.move(-1,0);
+			if(lyden.getFacing()==2){
+				lyden.move(-1,0);
 			}
-			if(loc.getFacing()==3){
-				loc.move(0,1);
+			if(lyden.getFacing()==3){
+				lyden.move(0,1);
 			}
 			else{
-				loc.move(1,0);
+				lyden.move(1,0);
 			}
 		}
 	}
