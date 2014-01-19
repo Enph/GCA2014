@@ -8,7 +8,7 @@ import com.example.gca2014.Square;
 public class Crystal extends Obj {
 	int texture;
 	public Crystal(int t) {
-		super("Crystal",40);
+		super("Crystal",t);
 		texture = t;
 	}
 	@Override
