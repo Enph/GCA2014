@@ -119,22 +119,22 @@ SurfaceHolder.Callback {
 	int width = 20;
 	List<ArrayList<Square>> view = new ArrayList<ArrayList<Square>>();
 	public List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
-	
-		@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-		public void run()
+
+	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+	public void run()
+	{
+		for(int i=0;i<height;++i)
 		{
-			for(int i=0;i<height;++i)
+			maze.add(new ArrayList<Square>());
+			for(int j=0;j<width;++j)
 			{
-				maze.add(new ArrayList<Square>());
-				for(int j=0;j<width;++j)
-				{
-					maze.get(i).add(new Square(i-2,j-4,(int) (19+Math.random()*3)));
-				}
+				maze.get(i).add(new Square(i-2,j-4,(int) (19+Math.random()*3)));
 			}
-			Square position = maze.get(4-3).get(4);
-			lyden = new objects.Player(position,45);
-			position.setVisible(true);
-			/*
+		}
+		Square position = maze.get(4-3).get(4);
+		lyden = new objects.Player(position,45);
+		position.setVisible(true);
+		/*
 			maze.get(4-2).get(3).setVisible(true);
 			maze.get(4-2).get(3).setTextureIndex(1);
 			maze.get(4-2).get(4).setVisible(true);
@@ -153,8 +153,8 @@ SurfaceHolder.Callback {
 			maze.get(4-4).get(4).setTextureIndex(8);
 			maze.get(4-4).get(5).setVisible(true);
 			maze.get(4-4).get(5).setTextureIndex(9);
-			 */
-			/*
+		 */
+		/*
 			maze.get(4-2).get(3).setVisible(true);
 			maze.get(4-2).get(3).setTextureIndex(10);
 			maze.get(4-2).get(4).setVisible(true);
@@ -173,12 +173,12 @@ SurfaceHolder.Callback {
 			maze.get(4-4).get(4).setTextureIndex(17);
 			maze.get(4-4).get(5).setVisible(true);
 			maze.get(4-4).get(5).setTextureIndex(18);
-			 */
-			Generator gen = new Generator();
-			gen.generate(this);
-			resetView();
-			context.mRenderer.addDrawable(lyden);
-		}
+		 */
+		Generator gen = new Generator();
+		gen.generate(this);
+		resetView();
+		context.mRenderer.addDrawable(lyden);
+	}
 
 	int dragStartX = 0;
 	int dragStartY = 0;
@@ -190,19 +190,21 @@ SurfaceHolder.Callback {
 	int viewWidth = 8;
 
 	public void resetView(){
-		for(int i = 0; i<43;i++){
-			context.mRenderer.clear(i);
-		}
-		view.clear();
-		for(int i=-2;i<3;++i)
-		{
-			view.add(new ArrayList<Square>());
-			for(int j=-4;j<4;++j)
+		synchronized(context){
+			for(int i = 0; i<43;i++){
+				context.mRenderer.clear(i);
+			}
+			view.clear();
+			for(int i=-2;i<3;++i)
 			{
-				Square square = new Square(maze.get(i+2+viewY).get(j+4+viewX),i,j);
-				view.get(i+2).add(square);
+				view.add(new ArrayList<Square>());
+				for(int j=-4;j<4;++j)
+				{
+					Square square = new Square(maze.get(i+2+viewY).get(j+4+viewX),i,j);
+					view.get(i+2).add(square);
 
-				context.mRenderer.addDrawable(square);
+					context.mRenderer.addDrawable(square);
+				}
 			}
 		}
 	}
@@ -296,6 +298,7 @@ SurfaceHolder.Callback {
 				{
 					//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
 					lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
+					lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 					context.mRenderer.clear(lyden.textureIndex());
 					if(dx==1){
 						lyden.setTextureIndex(43);
@@ -308,8 +311,8 @@ SurfaceHolder.Callback {
 				else
 					if((dy==1||dy==-1)&&dx==0)
 					{
-						maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
-
+						lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
+						lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 						context.mRenderer.clear(lyden.textureIndex());
 						lyden.setTextureIndex(45);
 						context.mRenderer.addDrawable(lyden);
