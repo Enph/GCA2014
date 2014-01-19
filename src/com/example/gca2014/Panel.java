@@ -5,18 +5,26 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
 import objects.Crystal;
+import objects.Flame;
 import objects.Obj;
 import objects.Pedestal;
 import objects.Player;
 import objects.Portal;
+import objects.Sage;
+import objects.Wood;
+import spells.Earth;
+import spells.Fire;
+import spells.Water;
 
 import mapgeneration.Generator;
+import mapgeneration.Room;
 
 import android.annotation.TargetApi;
 import android.graphics.Point;
@@ -119,6 +127,81 @@ SurfaceHolder.Callback {
 	List<ArrayList<Square>> view = new ArrayList<ArrayList<Square>>();
 	public List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
 	public List<List<ArrayList<Square>>> mazes = new ArrayList<List<ArrayList<Square>>>();
+	
+	public void createMazes(){
+		Generator gen = new Generator(0,1);
+		List<Obj> mustHaves = new ArrayList<Obj>();
+		
+		//Basement 52-56
+		maze = this.mazesloop(52,56);
+		gen.generateBasement(this);
+		mazes.add(maze);
+		
+		//White Room 52-56
+		maze = this.mazesloop(52,56);
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null), new Crystal(true,5,null), new Crystal(true,6,null)));
+		gen.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Red Room 27-31
+		maze = this.mazesloop(27,31);
+		//add pressure plate to gain access to certain room
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null), new Crystal(true,7,new Earth()), new Crystal(true,8,null)));
+		gen.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Orange Room 57-61 for floors, 4-8 for fire walls
+		maze = this.mazesloop(57,61);
+		//add pressure plate to gain access to certain room, teddy bear
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(new Fire()), new Crystal(true,9,null), new Crystal(true,11,null),new Flame()));
+		Generator gener = new Generator(4,0);
+		gener.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Green Room 33-37
+		maze = this.mazesloop(33,37);
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null),new Crystal(true,12,null),new Crystal(true,13,null), new Crystal(true,14,null),new Wood()));
+		gen.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Blue Room 57-61 for floors, 0-3 for water
+		maze = this.mazesloop(57,61);
+		//flowing water u can block with boulder
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null),new Crystal(true,15,null),new Crystal(true,16,new Water())));
+		Generator gene = new Generator(0,0,4);
+		gene.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Purple Room 38-42
+		maze = this.mazesloop(38,42);
+		mustHaves.addAll(Arrays.asList(new Portal(null),new Portal(null),new Crystal(true,17,null), new Sage()));
+		gen.generateRandom(this, mustHaves);
+		mazes.add(maze);
+		mustHaves.clear();
+		
+		//Black Room
+		maze = this.mazesloop(52,56);
+		gen.generateBlackRoom(this);
+		mazes.add(maze);
+	}
+	
+	public List<ArrayList<Square>> mazesloop(int low, int high){
+		maze = new ArrayList<ArrayList<Square>>();
+		for(int i=0;i<height;++i)
+		{
+			maze.add(new ArrayList<Square>());
+			for(int j=0;j<width;++j)
+			{
+				maze.get(i).add(new Square(i-2,j-4,(int) (low+Math.random()*(high-low))));
+			}
+		}
+		return maze;
+	}
 
 	public void reputPlayer(int x, int y){
 
@@ -183,9 +266,7 @@ SurfaceHolder.Callback {
 			maze.get(4-4).get(5).setVisible(true);
 			maze.get(4-4).get(5).setTextureIndex(18);
 		 */
-		Generator gen = new Generator();
-		List<Obj> mustHave = new ArrayList<Obj>();
-		gen.generateBasement(this);
+		
 		resetView();
 		context.mRenderer.addDrawable(lyden);
 	}

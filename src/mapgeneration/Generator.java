@@ -12,6 +12,18 @@ import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 public class Generator {
+	private int texture = 0;
+	private int size = 1;
+	private int max = 5;
+	public Generator(int texture, int size){
+		this.texture = texture;
+		this.size = size;
+	}
+	public Generator(int texture, int size, int max){
+		this.texture = texture;
+		this.size = size;
+		this.max = max;
+	}
 	public List<Room> generateBasement(Panel panel){
 		List<Room> rooms = new ArrayList<Room>();
 		List<Hall> halls = new ArrayList<Hall>();
@@ -93,8 +105,8 @@ public class Generator {
 				//Log.d("things","j"+j+"i"+i);
 				if(isWall){
 					square.obstacle();
-					square.setTextureIndex((int)(5*Math.random()));
-					square.setTextureSize(1);
+					square.setTextureIndex(texture+(int)(max*Math.random()));
+					square.setTextureSize(size);
 					//if(j-1>=0)Log.d("things",panel.maze.get(j-1).get(i).isObstacle()?"make wall":"dont make wall");
 					walls.add(square);
 					wallet.add(new Integer[]{j,i});

@@ -28,7 +28,9 @@ public class Crystal extends Obj {
 		on.setObject(null);
 		setSquare(null);
 		panel.setOnCrystal(this);
-		panel.getLyden().getSpellbook().add(spell);
+		if(spell != null){
+			panel.getLyden().getSpellbook().add(spell);
+		}
 		panel.context.mRenderer.addDrawable(new Drawable(){
 			@Override
 			public void draw(GL10 gl) {
