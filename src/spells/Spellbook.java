@@ -7,6 +7,10 @@ import com.example.gca2014.Square;
 
 public class Spellbook extends ArrayList<Spell>{
 
+	public Spellbook(Panel panel){
+		this.panel = panel;
+	}
+	private Panel panel;
 	private Spell selected = null;
 	public void scroll(int y){
 		for(Spell spell:this){
@@ -22,4 +26,9 @@ public class Spellbook extends ArrayList<Spell>{
 		}
 	}
 	
+	@Override
+	public boolean add(Spell spell){
+		
+		return super.add(spell);
+	}
 }

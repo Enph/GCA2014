@@ -45,10 +45,10 @@ public class Player extends Position implements Drawable{
     }; 
     public void reset(){
     	vertices = new float[]{
-    			-0.075f, -0.075f,  0.001f,		// V1 - bottom left
-    			-0.075f,  0.075f,  0.004f,		// V2 - top left
-    			 0.075f, -0.075f,  0.001f,		// V3 - bottom right
-    			 0.075f,  0.075f,  0.004f,		// V4 - top right
+    			-0.075f, -0.05f,  0.001f,		// V1 - bottom left
+    			-0.075f,  0.1f,  0.004f,		// V2 - top left
+    			 0.075f, -0.05f,  0.001f,		// V3 - bottom right
+    			 0.075f,  0.1f,  0.004f,		// V4 - top right
                             
     	};
     	move(0,1);
@@ -120,22 +120,22 @@ public class Player extends Position implements Drawable{
 	}
 	
 	public void faceLeft(){
-		this.setTextureIndex(25);
+		this.setTextureIndex(61);
 		facing = 4;
 	}
 	
 	public void faceRight(){
-		this.setTextureIndex(24);
+		this.setTextureIndex(60);
 		facing = 2;
 	}
 
 	public void faceUp(){
-		this.setTextureIndex(27);
+		this.setTextureIndex(63);
 		facing = 3;
 	}
 
 	public void faceDown(){
-		this.setTextureIndex(26);
+		this.setTextureIndex(62);
 		facing = 1;
 	}
 	
@@ -169,6 +169,10 @@ public class Player extends Position implements Drawable{
 	public int textureSize() {
 		// TODO Auto-generated method stub
 		return 1;
+	}
+
+	public Spellbook getSpellbook() {
+		return book;
 	}
 
 }
