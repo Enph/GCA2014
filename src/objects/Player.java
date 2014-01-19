@@ -21,6 +21,7 @@ public class Player extends Position implements Drawable{
 	
 	private int index;
 	private Spellbook book;
+	private int health = 3;
 
 	public Player(Square position, int index) {
 		super(position.getX(),position.getY());
@@ -96,6 +97,14 @@ public class Player extends Position implements Drawable{
 
 	public void cast(Square square, Panel panel) {
 		book.cast(square, panel);
+	}
+	
+	public int getHealth(){
+		return health;
+	}
+	
+	public void loseHealth(){
+		health--;
 	}
 
 }
