@@ -8,7 +8,7 @@ import com.example.gca2014.Square;
 public class Portal extends Obj {
 	
 	public Portal(){
-		super("Portal",2,41);
+		super("Portal",41);
 	}
 
 	@Override

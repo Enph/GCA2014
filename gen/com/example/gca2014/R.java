@@ -65,6 +65,14 @@ public final class R {
         public static final int wall2=0x7f020029;
         public static final int wall3=0x7f02002a;
         public static final int wall4=0x7f02002b;
+        public static final int walloutline1=0x7f02002c;
+        public static final int walloutline2=0x7f02002d;
+        public static final int walloutline3=0x7f02002e;
+        public static final int walloutline4=0x7f02002f;
+        public static final int walloutline6=0x7f020030;
+        public static final int walloutline7=0x7f020031;
+        public static final int walloutline8=0x7f020032;
+        public static final int walloutline9=0x7f020033;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;

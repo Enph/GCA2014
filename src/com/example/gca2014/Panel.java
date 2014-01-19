@@ -30,7 +30,7 @@ SurfaceHolder.Callback {
 	public int BridgeSteps=0;
 	public int lvlcount=1;
 	public boolean ready=false;
-	public MainActivity context;
+	public static MainActivity context;
 	// public Pieces FallingPieces=new Pieces(this);
 	public double chanceOfBomb = 0.1f;
 	public double chanceOfPowerUp = 0.1f;
@@ -96,14 +96,17 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall2, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall3, context);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.wall4, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);//39
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.squarewater5, context);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside, context);//43
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside2, context);//44
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteback, context);//45
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline1, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline2, context);//39
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline3, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline4, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline6, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline7, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline8, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.walloutline9, context);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside, context);//46
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteside2, context);//47
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.spriteback, context);//48
 
 		/*
     	//context.mRenderer.loadGLTexture(com.example.astrobridge.R.drawable.astronaut, context);
@@ -133,7 +136,7 @@ SurfaceHolder.Callback {
 			}
 		}
 		Square position = maze.get(4-3).get(4);
-		lyden = new objects.Player(position,45);
+		lyden = new objects.Player(position,48);
 		position.setVisible(true);
 		/*
 			maze.get(4-2).get(3).setVisible(true);
@@ -192,7 +195,7 @@ SurfaceHolder.Callback {
 
 	public void resetView(){
 		synchronized(context){
-			for(int i = 0; i<43;i++){
+			for(int i = 0; i<46;i++){
 				context.mRenderer.clear(i);
 			}
 			view.clear();
@@ -213,120 +216,122 @@ SurfaceHolder.Callback {
 	@Override
 	public boolean onTouchEvent(MotionEvent e)
 	{
-		if(e.getAction()==MotionEvent.ACTION_DOWN)
-		{
-			dragStartX = (int)e.getX();
-			dragStartY = (int)e.getY();
-			startX = (int)(e.getX()*9f/self.getWidth());
-			startY = (int)(e.getY()*5f/self.getHeight());
-		}
-		else if(e.getAction()==MotionEvent.ACTION_UP)
-		{
+		if(ready){
+			if(e.getAction()==MotionEvent.ACTION_DOWN)
+			{
+				dragStartX = (int)e.getX();
+				dragStartY = (int)e.getY();
+				startX = (int)(e.getX()*9f/self.getWidth());
+				startY = (int)(e.getY()*5f/self.getHeight());
+			}
+			else if(e.getAction()==MotionEvent.ACTION_UP)
+			{
 
-			int endX = (int)(e.getX()*9f/self.getWidth());
-			int endY = (int)(e.getY()*5f/self.getHeight());
-			if((startX != endX || startY != endY)){
-				double theta = Math.atan2((e.getY()-dragStartY),(e.getX()-dragStartX));
+				int endX = (int)(e.getX()*9f/self.getWidth());
+				int endY = (int)(e.getY()*5f/self.getHeight());
+				if((startX != endX || startY != endY)){
+					double theta = Math.atan2((e.getY()-dragStartY),(e.getX()-dragStartX));
 
 
-				if(theta<Math.PI/4&&theta>=-Math.PI/4){
-					if(lyden.getX()<viewWidth-1 && !view.get(4-lyden.getY()).get(lyden.getX()+1).isObstacle()){
-						if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
-						{
-							viewX+=1;
-							resetView();
-						}
-						else if(lyden.getX()<viewWidth-1) {
-							lyden.move(1,0);
-							if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-								
+					if(theta<Math.PI/4&&theta>=-Math.PI/4){
+						if(lyden.getX()<viewWidth-1 && !view.get(4-lyden.getY()).get(lyden.getX()+1).isObstacle()){
+							if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
+							{
+								viewX+=1;
+								resetView();
+							}
+							else if(lyden.getX()<viewWidth-1) {
+								lyden.move(1,0);
+								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+
+								}
 							}
 						}
+						context.mRenderer.clear(lyden.textureIndex());
+						lyden.setTextureIndex(47);
+						context.mRenderer.addDrawable(lyden);
 					}
-					context.mRenderer.clear(lyden.textureIndex());
-					lyden.setTextureIndex(44);
-					context.mRenderer.addDrawable(lyden);
-				}
-				else if(theta<Math.PI*3/4&&theta>=Math.PI/4){
-					if(lyden.getY()<viewHeight-1 && !view.get(4-(lyden.getY()+1)).get(lyden.getX()).isObstacle()){
-						if(lyden.getY()+1==viewHeight-1&&viewY>0)
-						{
-							viewY-=1;
-							resetView();
+					else if(theta<Math.PI*3/4&&theta>=Math.PI/4){
+						if(lyden.getY()<viewHeight-1 && !view.get(4-(lyden.getY()+1)).get(lyden.getX()).isObstacle()){
+							if(lyden.getY()+1==viewHeight-1&&viewY>0)
+							{
+								viewY-=1;
+								resetView();
+							}
+							else if(lyden.getY()<viewHeight-1) {
+								lyden.move(0,1);
+							}
 						}
-						else if(lyden.getY()<viewHeight-1) {
-							lyden.move(0,1);
-						}
+						context.mRenderer.clear(lyden.textureIndex());
+						lyden.setTextureIndex(48);
+						context.mRenderer.addDrawable(lyden);
 					}
-					context.mRenderer.clear(lyden.textureIndex());
-					lyden.setTextureIndex(45);
-					context.mRenderer.addDrawable(lyden);
-				}
-				else if(theta<-Math.PI*1/4&&theta>=-Math.PI*3/4){
-					if(lyden.getY()>0 && !view.get(4-(lyden.getY()-1)).get(lyden.getX()).isObstacle()){
-						if(lyden.getY()-1==0&&viewY+viewHeight<height)
-						{
-							viewY+=1;
-							resetView();
+					else if(theta<-Math.PI*1/4&&theta>=-Math.PI*3/4){
+						if(lyden.getY()>0 && !view.get(4-(lyden.getY()-1)).get(lyden.getX()).isObstacle()){
+							if(lyden.getY()-1==0&&viewY+viewHeight<height)
+							{
+								viewY+=1;
+								resetView();
+							}
+							else if(lyden.getY()>0) {
+								lyden.move(0,-1);
+							}
 						}
-						else if(lyden.getY()>0) {
-							lyden.move(0,-1);
-						}
+						context.mRenderer.clear(lyden.textureIndex());
+						lyden.setTextureIndex(48);
+						context.mRenderer.addDrawable(lyden);
 					}
-					context.mRenderer.clear(lyden.textureIndex());
-					lyden.setTextureIndex(45);
-					context.mRenderer.addDrawable(lyden);
-				}
-				else {
-					if( lyden.getX()>0&&!view.get(4-lyden.getY()).get(lyden.getX()-1).isObstacle()){
-						if(lyden.getX()-1==0&&viewX>0)
-						{
-							viewX-=1;
-							resetView();
+					else {
+						if( lyden.getX()>0&&!view.get(4-lyden.getY()).get(lyden.getX()-1).isObstacle()){
+							if(lyden.getX()-1==0&&viewX>0)
+							{
+								viewX-=1;
+								resetView();
+							}
+							else if(lyden.getX()>0) {
+								lyden.move(-1,0);
+							}
 						}
-						else if(lyden.getX()>0) {
-							lyden.move(-1,0);
-						}
+						context.mRenderer.clear(lyden.textureIndex());
+						lyden.setTextureIndex(46);
+						context.mRenderer.addDrawable(lyden);
 					}
-					context.mRenderer.clear(lyden.textureIndex());
-					lyden.setTextureIndex(43);
-					context.mRenderer.addDrawable(lyden);
-				}
 
-			}
-			else
-			{
-				int dx = lyden.getX()-startX;
-				int dy = lyden.getY()-startY;
-				if((dx==1||dx==-1)&&dy==0)
-				{
-					//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
-					lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
-					lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
-					context.mRenderer.clear(lyden.textureIndex());
-					if(dx==1){
-						lyden.faceRight();
-					}
-					else{
-						lyden.faceLeft();
-					}
-					context.mRenderer.addDrawable(lyden);
 				}
 				else
-					if((dy==1||dy==-1)&&dx==0)
+				{
+					int dx = lyden.getX()-startX;
+					int dy = lyden.getY()-startY;
+					if((dx==1||dx==-1)&&dy==0)
 					{
+						//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
 						lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
 						lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 						context.mRenderer.clear(lyden.textureIndex());
-						if(dy==1){
-							lyden.faceUp();
+						if(dx==1){
+							lyden.faceRight();
 						}
 						else{
-							lyden.faceDown();
+							lyden.faceLeft();
 						}
 						context.mRenderer.addDrawable(lyden);
 					}
-				resetView();
+					else
+						if((dy==1||dy==-1)&&dx==0)
+						{
+							lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
+							lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
+							context.mRenderer.clear(lyden.textureIndex());
+							if(dy==1){
+								lyden.faceUp();
+							}
+							else{
+								lyden.faceDown();
+							}
+							context.mRenderer.addDrawable(lyden);
+						}
+					resetView();
+				}
 			}
 		}
 		return true;

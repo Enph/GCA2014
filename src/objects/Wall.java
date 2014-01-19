@@ -1,19 +1,16 @@
 package objects;
 
-import javax.microedition.khronos.opengles.GL10;
-
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
-public class Torch extends Obj {
+public class Wall extends Obj {
 
-	public Torch() {
-		super("Torch",40);
+	public Wall(int textureIndex) {
+		super("Wall", textureIndex);
 	}
 
 	@Override
 	public void onStep(Square on, Panel panel) {
-		// TODO Auto-generated method stub
 		
 	}
 

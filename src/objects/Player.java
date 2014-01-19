@@ -116,22 +116,22 @@ public class Player extends Position implements Drawable{
 	}
 	
 	public void faceLeft(){
-		this.setTextureIndex(44);
+		this.setTextureIndex(47);
 		facing = 4;
 	}
 	
 	public void faceRight(){
-		this.setTextureIndex(43);
+		this.setTextureIndex(46);
 		facing = 2;
 	}
 
 	public void faceUp(){
-		this.setTextureIndex(45);
+		this.setTextureIndex(48);
 		facing = 1;
 	}
 
 	public void faceDown(){
-		this.setTextureIndex(45);
+		this.setTextureIndex(48);
 		facing = 3;
 	}
 	

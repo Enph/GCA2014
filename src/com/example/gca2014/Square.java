@@ -87,6 +87,9 @@ public class Square extends Position implements Drawable{
     	if(s.isObstacle()){
 			this.obstacle();
 		}
+    	if(s.getObject()!=null){
+			setObject(s.getObject());
+		}
     }
     
  
@@ -97,6 +100,9 @@ public class Square extends Position implements Drawable{
 		mTexture = square.mTexture;
 		if(square.isObstacle()){
 			this.obstacle();
+		}
+		if(square.getObject()!=null){
+			this.setObject(square.getObject());
 		}
 	}
 	public void move(int x, int y){
@@ -124,18 +130,6 @@ public class Square extends Position implements Drawable{
 		vertexBuffer.position(0);
 	}
 	
-	public void relocate(int x, int y){
-		setX(0);
-		setY(0);
-		vertices = new float[]{
-			-.5f, -.5f,  0.0f,		// V1 - bottom left
-			-.5f,  .5f,  0.0f,		// V2 - top left
-			.5f, -.5f,  0.0f,		// V3 - bottom right
-			.5f,  .5f,  0.0f,		// V4 - top right
-                        
-		};
-		move(x,y);
-	}
 	public boolean equals(Object O){
 		return ((Square)O).vertices[0]==vertices[0]&&
 				((Square)O).vertices[1]==vertices[1];
@@ -146,6 +140,9 @@ public class Square extends Position implements Drawable{
 		{
 		  gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		  gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		  if(getObject()!=null){
+			  Panel.context.mRenderer.addDrawable(getObject());
+		  }
 		}
 	}
 	public void setVisible(boolean b) {
@@ -158,6 +155,7 @@ public class Square extends Position implements Drawable{
 	
 	public void setObject(Obj object){
 		myobj = object;
+		object.setSquare(this);
 	}
 	
 	public boolean getVisible(){

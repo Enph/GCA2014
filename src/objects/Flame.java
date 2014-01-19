@@ -8,7 +8,7 @@ import com.example.gca2014.Square;
 public class Flame extends Obj {
 	
 	public Flame(){
-		super("Flame",2,41);
+		super("Flame",41);
 	}
 
 	@Override
