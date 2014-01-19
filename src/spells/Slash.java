@@ -1,7 +1,6 @@
 package spells;
 
 import objects.Creature;
-import objects.GL10;
 
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;

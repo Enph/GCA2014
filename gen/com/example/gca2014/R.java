@@ -41,18 +41,20 @@ public final class R {
         public static final int note_7b_nb_blue=0x7f020011;
         public static final int note_8a_lyden_purple=0x7f020012;
         public static final int pedestal=0x7f020013;
-        public static final int spriteshadeblack=0x7f020014;
-        public static final int spriteshadeblue=0x7f020015;
-        public static final int spriteshadegreen=0x7f020016;
-        public static final int spriteshadeorange=0x7f020017;
-        public static final int spriteshadepurple=0x7f020018;
-        public static final int spriteshadered=0x7f020019;
-        public static final int spriteshadewhite=0x7f02001a;
-        public static final int spriteshadeyellow=0x7f02001b;
-        public static final int square=0x7f02001c;
-        public static final int title1=0x7f02001d;
-        public static final int title2=0x7f02001e;
-        public static final int title3=0x7f02001f;
+        public static final int pedestalportal=0x7f020014;
+        public static final int pedestalyou=0x7f020015;
+        public static final int spriteshadeblack=0x7f020016;
+        public static final int spriteshadeblue=0x7f020017;
+        public static final int spriteshadegreen=0x7f020018;
+        public static final int spriteshadeorange=0x7f020019;
+        public static final int spriteshadepurple=0x7f02001a;
+        public static final int spriteshadered=0x7f02001b;
+        public static final int spriteshadewhite=0x7f02001c;
+        public static final int spriteshadeyellow=0x7f02001d;
+        public static final int square=0x7f02001e;
+        public static final int title1=0x7f02001f;
+        public static final int title2=0x7f020020;
+        public static final int title3=0x7f020021;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;

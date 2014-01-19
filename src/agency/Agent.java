@@ -37,7 +37,6 @@ public class Agent {
 		return !failed;
 	}
 	public void step(Position goal){
-		//System.out.println(paths);
 		try {
 			++this.trail;
 			Path first = paths.first();
@@ -70,7 +69,6 @@ public class Agent {
 				clones.add(clone);
 				previousMoves.add(move);
 			}
-			//System.out.println("clones:"+clones);
 			paths.remove(first);
 			for(Path clone:clones){
 				if(clone.hasReachedEnd(goal)){
@@ -79,7 +77,6 @@ public class Agent {
 				paths.add(clone);
 			}
 		} catch (NoSuchElementException e) {
-			//System.out.println(name+" was unable to find a path to the goal.");
 			finished = true;
 			failed = true;
 		}
@@ -87,9 +84,6 @@ public class Agent {
 	}
 	public boolean isFinished(){
 		return finished;
-	}
-	public String toString(){
-		return name+" "+paths.first().toString()+" in "+paths.first().size()+" steps";
 	}
 	public boolean hasFailed() {
 		return failed||paths.isEmpty();

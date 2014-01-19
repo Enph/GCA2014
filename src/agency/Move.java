@@ -42,8 +42,4 @@ public class Move extends Position {
 		}
 		return new Move(maze.get(getX(),getY()-1),maze);
 	}
-	
-	public String toString(){  
-		return "("+getX()+","+getY()+")";
-	}
 }

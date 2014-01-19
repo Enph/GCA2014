@@ -75,7 +75,7 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_1a_lyden_hub, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_1b_nb_hub, context, 1);
 
-		lyden = new objects.Player(4,1,26);
+		lyden = new objects.Player(4,1,60);
 		reputPlayer(4,2);
 		run();
 		ready=true;
@@ -185,7 +185,7 @@ SurfaceHolder.Callback {
 		 */
 		Generator gen = new Generator();
 		List<Obj> mustHave = new ArrayList<Obj>();
-		gen.generateBlackRoom(this);
+		gen.generateBasement(this);
 		resetView();
 		context.mRenderer.addDrawable(lyden);
 	}
@@ -204,7 +204,7 @@ SurfaceHolder.Callback {
 			for(int i = 0; i<64;i++){
 				context.mRenderer.clear(0,i);				
 			}
-			for(int i = 0; i<24;i++){
+			for(int i = 0; i<60;i++){
 				context.mRenderer.clear(1,i);				
 			}
 			view.clear();

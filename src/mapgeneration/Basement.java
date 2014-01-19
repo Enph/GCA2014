@@ -17,8 +17,8 @@ public class Basement extends Room {
 	private Pedestal pedestals;
 	private Player lyden;
 	private Crystal crystal[] = {new Crystal(true,3),new Crystal(false,4)};
-	private Shades shades[] = {new Shades(8),new Shades(8),new Shades(8),
-								new Shades(8),new Shades(8),new Shades(8)};
+	private Shades shades[] = {new Shades(2),new Shades(3),new Shades(4),
+								new Shades(5),new Shades(6),new Shades(7)};
 	
 	public Basement(){
 		super(0,0,13,7);
@@ -35,13 +35,13 @@ public class Basement extends Room {
 			}
 		}
 		
-		panel.maze.get(1).get(3).setObject(new Pedestal());
-		panel.maze.get(2).get(4).setObject(new Pedestal());
-		panel.maze.get(3).get(5).setObject(new Pedestal());
-		panel.maze.get(3).get(7).setObject(new Pedestal());
-		panel.maze.get(2).get(8).setObject(new Pedestal());
-		panel.maze.get(1).get(9).setObject(new Pedestal());
-		panel.maze.get(1).get(6).setObject(new Pedestal());
+		panel.maze.get(1).get(3).setObject(new Pedestal(false));
+		panel.maze.get(2).get(4).setObject(new Pedestal(false));
+		panel.maze.get(3).get(5).setObject(new Pedestal(false));
+		panel.maze.get(3).get(7).setObject(new Pedestal(false));
+		panel.maze.get(2).get(8).setObject(new Pedestal(false));
+		panel.maze.get(1).get(9).setObject(new Pedestal(false));
+		panel.maze.get(1).get(6).setObject(new Pedestal(true));
 		
 		panel.maze.get(2).get(3).setObject(shades[0]);
 		panel.maze.get(3).get(4).setObject(shades[1]);

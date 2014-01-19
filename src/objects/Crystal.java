@@ -15,7 +15,7 @@ import com.example.gca2014.Square;
 public class Crystal extends Obj {
 	private int note;
 	public Crystal(boolean good, int note) {
-		super("Crystal",good?17:16);
+		super("Crystal",good?25:24);
 		this.note = note;
 	}
 	@Override
