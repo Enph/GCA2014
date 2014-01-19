@@ -13,9 +13,5 @@ public class Wall extends Obj {
 	public void onStep(Square on, Panel panel) {
 		
 	}
-	@Override
-	public int textureSize(){
-		return 1;
-	}
 
 }

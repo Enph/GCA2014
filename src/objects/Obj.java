@@ -55,7 +55,7 @@ public abstract class Obj implements Drawable {
 	}
 	@Override
 	public int textureSize() {
-		return 0;
+		return 1;
 	}
 
 	public String getName(){

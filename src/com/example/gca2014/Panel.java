@@ -10,8 +10,9 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import objects.Crystal;
 import objects.Obj;
-import objects.Pedastal;
+import objects.Pedestal;
 import objects.Player;
 import objects.Portal;
 
@@ -71,8 +72,10 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.allimages1, context, 64);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.allimages2, context, 64);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.frame, context, 1);
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_1a_lyden_hub, context, 1);
 
 		lyden = new objects.Player(4,1,18);
+		reputPlayer(4,2);
 		run();
 		ready=true;
 		context.mRenderer.addDrawable(new Drawable(){
@@ -116,6 +119,16 @@ SurfaceHolder.Callback {
 	public List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
 	public List<List<ArrayList<Square>>> mazes = new ArrayList<List<ArrayList<Square>>>();
 
+	public void reputPlayer(int x, int y){
+
+		viewX = 0;
+		viewY = 0;
+		lyden.setX(x);
+		lyden.setY(y);
+		lyden.reset();
+
+	}
+
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public void run()
 	{
@@ -127,11 +140,6 @@ SurfaceHolder.Callback {
 				maze.get(i).add(new Square(i-2,j-4,(int) (33+Math.random()*5)));
 			}
 		}
-		viewX = 0;
-		viewY = 0;
-		lyden.setX(4);
-		lyden.setY(2);
-		lyden.reset();
 		Square position = maze.get(4-3).get(4);
 		position.setVisible(true);
 		/*
@@ -176,7 +184,7 @@ SurfaceHolder.Callback {
 		 */
 		Generator gen = new Generator();
 		List<Obj> mustHave = new ArrayList<Obj>();
-		mustHave.add(new Portal());
+		mustHave.add(new Crystal(3));
 		gen.generate(this,mustHave);
 		resetView();
 		context.mRenderer.addDrawable(lyden);
@@ -218,132 +226,139 @@ SurfaceHolder.Callback {
 	public boolean onTouchEvent(MotionEvent e)
 	{
 		if(ready){
-			if(e.getAction()==MotionEvent.ACTION_DOWN)
-			{
-				dragStartX = (int)e.getX();
-				dragStartY = (int)e.getY();
-				startX = (int)(e.getX()*9f/self.getWidth());
-				startY = (int)(e.getY()*5f/self.getHeight());
+			if(crystal!=null){
+				context.mRenderer.clear(crystal.getNote(), 0);
+				crystal=null;
 			}
-			else if(e.getAction()==MotionEvent.ACTION_UP)
+			else
 			{
-
-				int endX = (int)(e.getX()*9f/self.getWidth());
-				int endY = (int)(e.getY()*5f/self.getHeight());
-				if((startX != endX || startY != endY)){
-					double theta = Math.atan2((e.getY()-dragStartY),(e.getX()-dragStartX));
-
-
-					if(theta<Math.PI/4&&theta>=-Math.PI/4){
-						if(lyden.getX()<viewWidth-1 && !view.get(4-lyden.getY()).get(lyden.getX()+1).isObstacle()){
-							if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
-							{
-								viewX+=1;
-								resetView();
-							}
-							else if(lyden.getX()<viewWidth-1) {
-								lyden.move(1,0);
-								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-									lyden.darkness(this);
-								}
-							}
-						}
-						context.mRenderer.clear(1,lyden.textureIndex());
-						lyden.faceLeft();
-						context.mRenderer.addDrawable(lyden);
-					}
-					else if(theta<Math.PI*3/4&&theta>=Math.PI/4){
-						if(lyden.getY()<viewHeight-1 && !view.get(4-(lyden.getY()+1)).get(lyden.getX()).isObstacle()){
-							if(lyden.getY()+1==viewHeight-1&&viewY>0)
-							{
-								viewY-=1;
-								resetView();
-							}
-							else if(lyden.getY()<viewHeight-1) {
-								lyden.move(0,1);
-								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-									lyden.darkness(this);
-								}
-							}
-						}
-						context.mRenderer.clear(1,lyden.textureIndex());
-						lyden.faceUp();
-						context.mRenderer.addDrawable(lyden);
-					}
-					else if(theta<-Math.PI*1/4&&theta>=-Math.PI*3/4){
-						if(lyden.getY()>0 && !view.get(4-(lyden.getY()-1)).get(lyden.getX()).isObstacle()){
-							if(lyden.getY()-1==0&&viewY+viewHeight<height)
-							{
-								viewY+=1;
-								resetView();
-							}
-							else if(lyden.getY()>0) {
-								lyden.move(0,-1);
-								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-									lyden.darkness(this);
-								}
-							}
-						}
-						context.mRenderer.clear(1,lyden.textureIndex());
-						lyden.faceDown();
-						context.mRenderer.addDrawable(lyden);
-					}
-					else {
-						if( lyden.getX()>0&&!view.get(4-lyden.getY()).get(lyden.getX()-1).isObstacle()){
-							if(lyden.getX()-1==0&&viewX>0)
-							{
-								viewX-=1;
-								resetView();
-							}
-							else if(lyden.getX()>0) {
-								lyden.move(-1,0);
-								if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
-									lyden.darkness(this);
-								}
-							}
-						}
-						context.mRenderer.clear(1,lyden.textureIndex());
-						lyden.faceRight();
-						context.mRenderer.addDrawable(lyden);
-					}
-					view.get(4-lyden.getY()).get(lyden.getX()).onStep(this);
-				}
-				else
+				if(e.getAction()==MotionEvent.ACTION_DOWN)
 				{
-					if(startX==8&&startY==0){
-						context.finish();
-					}
-					int dx = lyden.getX()-startX;
-					int dy = lyden.getY()-startY;
-					if((dx==1||dx==-1)&&dy==0)
-					{
-						//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
-						lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
-						lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
-						context.mRenderer.clear(1,lyden.textureIndex());
-						if(dx==1){
-							lyden.faceRight();
-						}
-						else{
+					dragStartX = (int)e.getX();
+					dragStartY = (int)e.getY();
+					startX = (int)(e.getX()*9f/self.getWidth());
+					startY = (int)(e.getY()*5f/self.getHeight());
+				}
+				else if(e.getAction()==MotionEvent.ACTION_UP)
+				{
+
+					int endX = (int)(e.getX()*9f/self.getWidth());
+					int endY = (int)(e.getY()*5f/self.getHeight());
+					if((startX != endX || startY != endY)){
+						double theta = Math.atan2((e.getY()-dragStartY),(e.getX()-dragStartX));
+
+
+						if(theta<Math.PI/4&&theta>=-Math.PI/4){
+							if(lyden.getX()<viewWidth-1 && !view.get(4-lyden.getY()).get(lyden.getX()+1).isObstacle()){
+								if(lyden.getX()+1==viewWidth-1&&viewX+viewWidth<width)
+								{
+									viewX+=1;
+									resetView();
+								}
+								else if(lyden.getX()<viewWidth-1) {
+									lyden.move(1,0);
+									if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+										lyden.darkness(this);
+									}
+								}
+							}
+							context.mRenderer.clear(1,lyden.textureIndex());
 							lyden.faceLeft();
+							context.mRenderer.addDrawable(lyden);
 						}
-						context.mRenderer.addDrawable(lyden);
+						else if(theta<Math.PI*3/4&&theta>=Math.PI/4){
+							if(lyden.getY()<viewHeight-1 && !view.get(4-(lyden.getY()+1)).get(lyden.getX()).isObstacle()){
+								if(lyden.getY()+1==viewHeight-1&&viewY>0)
+								{
+									viewY-=1;
+									resetView();
+								}
+								else if(lyden.getY()<viewHeight-1) {
+									lyden.move(0,1);
+									if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+										lyden.darkness(this);
+									}
+								}
+							}
+							context.mRenderer.clear(1,lyden.textureIndex());
+							lyden.faceUp();
+							context.mRenderer.addDrawable(lyden);
+						}
+						else if(theta<-Math.PI*1/4&&theta>=-Math.PI*3/4){
+							if(lyden.getY()>0 && !view.get(4-(lyden.getY()-1)).get(lyden.getX()).isObstacle()){
+								if(lyden.getY()-1==0&&viewY+viewHeight<height)
+								{
+									viewY+=1;
+									resetView();
+								}
+								else if(lyden.getY()>0) {
+									lyden.move(0,-1);
+									if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+										lyden.darkness(this);
+									}
+								}
+							}
+							context.mRenderer.clear(1,lyden.textureIndex());
+							lyden.faceDown();
+							context.mRenderer.addDrawable(lyden);
+						}
+						else {
+							if( lyden.getX()>0&&!view.get(4-lyden.getY()).get(lyden.getX()-1).isObstacle()){
+								if(lyden.getX()-1==0&&viewX>0)
+								{
+									viewX-=1;
+									resetView();
+								}
+								else if(lyden.getX()>0) {
+									lyden.move(-1,0);
+									if(!maze.get(lyden.getY()).get(lyden.getX()).getVisible()){
+										lyden.darkness(this);
+									}
+								}
+							}
+							context.mRenderer.clear(1,lyden.textureIndex());
+							lyden.faceRight();
+							context.mRenderer.addDrawable(lyden);
+						}
+						view.get(4-lyden.getY()).get(lyden.getX()).onStep(this);
 					}
 					else
-						if((dy==1||dy==-1)&&dx==0)
+					{
+						if(startX==8&&startY==0){
+							context.finish();
+						}
+						int dx = lyden.getX()-startX;
+						int dy = lyden.getY()-startY;
+						if((dx==1||dx==-1)&&dy==0)
 						{
+							//maze.get(4-startY+viewY).get(startX+viewX).setVisible(true);
 							lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
 							lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
 							context.mRenderer.clear(1,lyden.textureIndex());
-							if(dy==1){
-								lyden.faceUp();
+							if(dx==1){
+								lyden.faceRight();
 							}
 							else{
-								lyden.faceDown();
+								lyden.faceLeft();
 							}
 							context.mRenderer.addDrawable(lyden);
 						}
-					resetView();
+						else
+							if((dy==1||dy==-1)&&dx==0)
+							{
+								lyden.cast(maze.get(4-startY+viewY).get(startX+viewX),this);
+								lyden.cast(maze.get(4-lyden.getY()+viewY).get(lyden.getX()+viewX),this);
+								context.mRenderer.clear(1,lyden.textureIndex());
+								if(dy==1){
+									lyden.faceUp();
+								}
+								else{
+									lyden.faceDown();
+								}
+								context.mRenderer.addDrawable(lyden);
+							}
+						resetView();
+					}
 				}
 			}
 		}
@@ -359,6 +374,11 @@ SurfaceHolder.Callback {
 
 	public Square getSquare(Player self) {
 		return maze.get(4-self.getY()+viewY).get(self.getX()+viewX);
+	}
+
+	Crystal crystal = null;
+	public void setOnCrystal(Crystal crystal) {
+		this.crystal = crystal;
 	}
 
 }

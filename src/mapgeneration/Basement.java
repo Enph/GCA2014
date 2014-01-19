@@ -51,7 +51,7 @@ public class Basement extends Room {
 		panel.maze.get(3).get(6).setObject(crystal[1]);
 		panel.maze.get(0).get(6).setObject(crystal[2]);
 		
-		lyden = new Player(6,2,48);
+		panel.reputPlayer(6, 2);
 		
 		return true;
 	}

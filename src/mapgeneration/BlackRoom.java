@@ -35,7 +35,7 @@ public class BlackRoom extends Room{
 		panel.maze.get(5).get(8).setVisible(true);
 		
 		panel.maze.get(2).get(6).setVisible(true);
-		lyden = new Player(6,2,48);
+		panel.reputPlayer(6, 2);
 		
 		return true;
 	}

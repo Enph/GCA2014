@@ -25,10 +25,25 @@ public final class R {
         public static final int allimages2=0x7f020001;
         public static final int frame=0x7f020002;
         public static final int ic_launcher=0x7f020003;
-        public static final int square=0x7f020004;
-        public static final int title1=0x7f020005;
-        public static final int title2=0x7f020006;
-        public static final int title3=0x7f020007;
+        public static final int note_1a_lyden_hub=0x7f020004;
+        public static final int note_1b_nb_hub=0x7f020005;
+        public static final int note_2a_lyden_white=0x7f020006;
+        public static final int note_2b_lyden_white=0x7f020007;
+        public static final int note_3a_nb_red=0x7f020008;
+        public static final int note_3b_nb_red=0x7f020009;
+        public static final int note_4a_lyden_orange=0x7f02000a;
+        public static final int note_4a_lyden_yellow=0x7f02000b;
+        public static final int note_4b_nb_orange=0x7f02000c;
+        public static final int note_6a_nb_green=0x7f02000d;
+        public static final int note_6b_lyden_green=0x7f02000e;
+        public static final int note_6c_anon_green=0x7f02000f;
+        public static final int note_7a_lyden_blue=0x7f020010;
+        public static final int note_7b_nb_blue=0x7f020011;
+        public static final int note_8a_lyden_purple=0x7f020012;
+        public static final int square=0x7f020013;
+        public static final int title1=0x7f020014;
+        public static final int title2=0x7f020015;
+        public static final int title3=0x7f020016;
     }
     public static final class id {
         public static final int action_settings=0x7f080000;

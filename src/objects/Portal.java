@@ -10,15 +10,12 @@ public class Portal extends Obj {
 	public Portal(){
 		super("Portal",5);
 	}
-	@Override
-	public int textureSize(){
-		return 1;
-	}
 	
 	@Override
 	public void onStep(Square on, Panel panel) {
 		panel.mazes.add(panel.maze);
 		panel.maze.clear();
+		panel.reputPlayer(4,2);
 		panel.run();
 		
 	}
