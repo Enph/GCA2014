@@ -8,7 +8,7 @@ import com.example.gca2014.Square;
 public class Light extends Spell{
 
 	public Light() {
-		super("Light", 35, 36);
+		super("Light", 0, 36);
 	}
 
 	@Override

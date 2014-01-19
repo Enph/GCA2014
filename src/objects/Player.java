@@ -30,9 +30,6 @@ public class Player extends Position implements Drawable{
 		move(0,1);
 		this.index = index;
 		this.book = new Spellbook();
-		Spell light = new Light();
-		this.book.add(light);
-		this.book.setSelected(light);
 	}
 	private FloatBuffer vertexBuffer;
 	static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates

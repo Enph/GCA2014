@@ -216,56 +216,6 @@ SurfaceHolder.Callback {
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public void run()
 	{
-		for(int i=0;i<height;++i)
-		{
-			maze.add(new ArrayList<Square>());
-			for(int j=0;j<width;++j)
-			{
-				maze.get(i).add(new Square(i-2,j-4,(int) (33+Math.random()*5)));
-			}
-		}
-		Square position = maze.get(4-3).get(4);
-		position.setVisible(true);
-		/*
-			maze.get(4-2).get(3).setVisible(true);
-			maze.get(4-2).get(3).setTextureIndex(1);
-			maze.get(4-2).get(4).setVisible(true);
-			maze.get(4-2).get(4).setTextureIndex(2);
-			maze.get(4-2).get(5).setVisible(true);
-			maze.get(4-2).get(5).setTextureIndex(3);
-			maze.get(4-3).get(3).setVisible(true);
-			maze.get(4-3).get(3).setTextureIndex(4);
-			maze.get(4-3).get(4).setVisible(true);
-			maze.get(4-3).get(4).setTextureIndex(5);
-			maze.get(4-3).get(5).setVisible(true);
-			maze.get(4-3).get(5).setTextureIndex(6);
-			maze.get(4-4).get(3).setVisible(true);
-			maze.get(4-4).get(3).setTextureIndex(7);
-			maze.get(4-4).get(4).setVisible(true);
-			maze.get(4-4).get(4).setTextureIndex(8);
-			maze.get(4-4).get(5).setVisible(true);
-			maze.get(4-4).get(5).setTextureIndex(9);
-		 */
-		/*
-			maze.get(4-2).get(3).setVisible(true);
-			maze.get(4-2).get(3).setTextureIndex(10);
-			maze.get(4-2).get(4).setVisible(true);
-			maze.get(4-2).get(4).setTextureIndex(11);
-			maze.get(4-2).get(5).setVisible(true);
-			maze.get(4-2).get(5).setTextureIndex(12);
-			maze.get(4-3).get(3).setVisible(true);
-			maze.get(4-3).get(3).setTextureIndex(13);
-			maze.get(4-3).get(4).setVisible(true);
-			maze.get(4-3).get(4).setTextureIndex(14);
-			maze.get(4-3).get(5).setVisible(true);
-			maze.get(4-3).get(5).setTextureIndex(15);
-			maze.get(4-4).get(3).setVisible(true);
-			maze.get(4-4).get(3).setTextureIndex(16);
-			maze.get(4-4).get(4).setVisible(true);
-			maze.get(4-4).get(4).setTextureIndex(17);
-			maze.get(4-4).get(5).setVisible(true);
-			maze.get(4-4).get(5).setTextureIndex(18);
-		 */
 		
 		resetView();
 		context.mRenderer.addDrawable(lyden);
@@ -322,6 +272,9 @@ SurfaceHolder.Callback {
 					startY = (int)(e.getY()*5f/self.getHeight());
 					if(startX==8){
 						onSpellbook = true;
+					}
+					else {
+						onSpellbook = false;
 					}
 				}
 				else if(e.getAction()==MotionEvent.ACTION_UP)

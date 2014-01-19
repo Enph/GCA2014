@@ -10,7 +10,7 @@ import com.example.gca2014.Square;
 public class Earth extends Spell{
 
 	public Earth(){
-		super("Earth",10,10);
+		super("Earth",4,10);
 	}
 	
 	public void onClick(Square cast, Panel panel) {

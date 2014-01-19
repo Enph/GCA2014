@@ -20,17 +20,23 @@ public abstract class Spell implements Drawable{
 	private FloatBuffer vertexBuffer;	// buffer holding the vertices
 
 	protected float vertices[] = {
-			-0.075f, -0.075f,  0.0f,		// V1 - bottom left
-			-0.075f,  0.075f,  0.0f,		// V2 - top left
-			0.075f, -0.075f,  0.0f,		// V3 - bottom right
-			0.075f,  0.075f,  0.0f,		// V4 - top right
+			-0.075f+0.15f*4f, -0.075f,  0.004f,		// V1 - bottom left
+			-0.075f+0.15f*4f,  0.075f,  0.004f,		// V2 - top left
+			0.075f+0.15f*4f, -0.075f,  0.004f,		// V3 - bottom right
+			0.075f+0.15f*4f,  0.075f,  0.004f,		// V4 - top right
 
 	};
 	public Spell(String name, int texture, int cast){
 		this.name = name;
-		this.texture = texture;
+		this.texture = texture+50;
 		angle = 0;
 		this.cast = cast;
+		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
+		byteBuffer.order(ByteOrder.nativeOrder());
+		vertexBuffer = byteBuffer.asFloatBuffer();
+		vertexBuffer.clear();
+		vertexBuffer.put(vertices);
+		vertexBuffer.position(0);
 	}
 	public abstract void onClick(Square cast, Panel panel);
 	
@@ -38,7 +44,7 @@ public abstract class Spell implements Drawable{
 
 		float tY = y*0.15f;//*sizeFactor/glConvert;
 		for(int m=0;m<4;m++){
-			vertices[m*3]+=tY;
+			vertices[m*3+1]+=tY;
 		}
 		angle +=y;
 		if(angle==0){
@@ -61,7 +67,6 @@ public abstract class Spell implements Drawable{
 	}
 	@Override
 	public int textureSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 1;
 	}
 }

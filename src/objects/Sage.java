@@ -8,7 +8,7 @@ public class Sage extends Obj{
 	private int textureId;
 	
 	public Sage(){
-		super("Sage", 10);
+		super("Sage", 28);
 	}
 
 	@Override

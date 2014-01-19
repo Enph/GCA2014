@@ -6,7 +6,7 @@ import com.example.gca2014.Square;
 public class Wood extends Obj{
 
 	public Wood(){
-		super("wood",10);
+		super("wood",27);
 	}
 
 	@Override

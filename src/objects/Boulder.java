@@ -6,7 +6,7 @@ import com.example.gca2014.Square;
 public class Boulder extends Obj{
 
 	public Boulder() {
-		super("Boulder", 10);
+		super("Boulder", 26);
 		// TODO Auto-generated constructor stub
 	}
 

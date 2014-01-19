@@ -6,6 +6,8 @@ import objects.Crystal;
 import objects.Pedestal;
 import objects.Player;
 import objects.Shades;
+import spells.Light;
+import spells.Slash;
 
 import android.util.Log;
 
@@ -16,7 +18,7 @@ public class Basement extends Room {
 	
 	private Pedestal pedestals;
 	private Player lyden;
-	private Crystal crystal[] = {new Crystal(true,3),new Crystal(false,4)};
+	private Crystal crystal[] = {new Crystal(true,3,new Light()),new Crystal(false,4,new Slash())};
 	private Shades shades[] = {new Shades(2),new Shades(3),new Shades(4),
 								new Shades(5),new Shades(6),new Shades(7)};
 	

@@ -8,7 +8,7 @@ import com.example.gca2014.Square;
 public class Slash extends Spell{
 
 	public Slash() {
-		super("Slash", 10, 10);
+		super("Slash", 1, 10);
 	}
 	
 	public void onClick(Square cast, Panel panel){

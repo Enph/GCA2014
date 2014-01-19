@@ -7,15 +7,38 @@ import com.example.gca2014.Square;
 
 public class Spellbook extends ArrayList<Spell>{
 
-	public Spellbook(Panel panel){
-		this.panel = panel;
-	}
-	private Panel panel;
 	private Spell selected = null;
 	public void scroll(int y){
-		for(Spell spell:this){
-			spell.rotate(this, y);
+		if(y==0){
+			return;
 		}
+		int diry = Math.abs(y)/y;
+		for(int i=0;i!=y;i+=diry){
+			selected = null;
+			for(Spell spell:this){
+				spell.rotate(this, diry);
+			}
+			if(selected==null){
+				for(Spell spell:this){
+					spell.rotate(this, -diry);
+				}
+				break;
+			}
+		}
+
+	}
+	public void unsafeScroll(int y){
+		if(y==0){
+			return;
+		}
+		int diry = Math.abs(y)/y;
+		for(int i=0;i!=y;i+=diry){
+			selected = null;
+			for(Spell spell:this){
+				spell.rotate(this, diry);
+			}
+		}
+
 	}
 	public void setSelected(Spell spell) {
 		selected = spell;
@@ -25,10 +48,19 @@ public class Spellbook extends ArrayList<Spell>{
 			square.setVisible(true);
 		}
 	}
-	
+
 	@Override
 	public boolean add(Spell spell){
 		
-		return super.add(spell);
+		while(selected!=null){
+			selected = null;
+			for(Spell s:this){
+				s.rotate(this, 1);
+			}
+		}
+		Panel.context.mRenderer.addDrawable(spell);
+		boolean result = super.add(spell);
+		scroll(1);
+		return result;
 	}
 }
