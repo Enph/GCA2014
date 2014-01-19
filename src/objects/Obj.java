@@ -68,7 +68,12 @@ public abstract class Obj implements Drawable {
 	}
 
 	public void setSquare(Square square) {
-		Panel.context.mRenderer.removeDrawable(this);
+		if(this.square!=null){
+			Panel.context.mRenderer.removeDrawable(this);
+		}
+		if(this.square!=null&&square==null){
+			this.square.setObject(null);
+		}
 		this.square = square;
 	}
 	
@@ -78,7 +83,6 @@ public abstract class Obj implements Drawable {
 	
 	public void move(int x,int y, Panel panel){
 		if(x!=0){
-			panel(this.getSquare())
         }
 		if(y!=0){
 			

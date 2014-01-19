@@ -85,7 +85,6 @@ public class Square extends Position implements Drawable{
 		for(int t=0;t<64;++t){
 			float i = (float)(t%8);
 			float j = (float)((t-i)/8f);
-			Log.d("",""+i+","+j);
 			textures[t]= new float[]{
 					// Mapping coordinates for the vertices
 					i/8f, (1f+j)/8f,		// top left		(V2)
@@ -123,6 +122,7 @@ public class Square extends Position implements Drawable{
 	public Square(Square s) {
 		super(0,0);
 		move(s.getX(),s.getY());
+		isVisible = s.isVisible;
 		mTexture = s.mTexture;
 		mTextureSize = s.mTextureSize;
 		if(s.isObstacle()){
@@ -137,7 +137,7 @@ public class Square extends Position implements Drawable{
 	public Square(Square square, int x, int y) {
 		super(4,3);
 		move(x,y);
-		isVisible = square.isVisible;
+		this.isVisible = square.isVisible;
 		mTexture = square.mTexture;
 		mTextureSize = square.mTextureSize;
 		if(square.isObstacle()){

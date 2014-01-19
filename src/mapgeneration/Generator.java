@@ -12,12 +12,27 @@ import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 public class Generator {
-	public List<Room> generate(Panel panel, List<Obj> mustHaves){
+	public List<Room> generateBasement(Panel panel){
+		List<Room> rooms = new ArrayList<Room>();
+		List<Hall> halls = new ArrayList<Hall>();
+		rooms.add(new Basement());
+		rooms.get(0).generate(rooms, panel);
+		makeWalls(rooms,halls,panel);
+		return rooms;
+	}
+	public List<Room> generateBlackRoom(Panel panel){
+		List<Room> rooms = new ArrayList<Room>();
+		List<Hall> halls = new ArrayList<Hall>();
+		rooms.add(new BlackRoom());
+		rooms.get(0).generate(rooms, panel);
+		makeWalls(rooms,halls,panel);
+		return rooms;
+	}
+	public List<Room> generateRandom(Panel panel, List<Obj> mustHaves){
+		
 		List<Room> all = new ArrayList<Room>();
 		List<Room> rooms = new ArrayList<Room>();
 		List<Hall> halls = new ArrayList<Hall>();
-		List<Square> walls = new ArrayList<Square>();
-		List<Integer[]> wallet = new ArrayList<Integer[]>();
 		all.add(new Room(3,0,3,3));
 		for(int i = 0;i<16;++i){
 			all.add(new Room());
@@ -51,6 +66,14 @@ public class Generator {
 				}
 			}
 		}
+		
+		makeWalls(rooms,halls,panel);
+		return rooms;
+	}
+	public void makeWalls(List<Room> rooms,List<Hall> halls,Panel panel){
+
+		List<Square> walls = new ArrayList<Square>();
+		List<Integer[]> wallet = new ArrayList<Integer[]>();
 		for(int i=0;i<panel.maze.size();++i){
 			for(int j=0;j<panel.maze.get(i).size();++j){
 				Square square = panel.maze.get(j).get(i);
@@ -114,6 +137,5 @@ public class Generator {
 				walls.get(i).setObject(new Wall(4));
 			}
 		}
-		return rooms;
 	}
 }

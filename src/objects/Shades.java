@@ -5,8 +5,8 @@ import com.example.gca2014.Square;
 
 public class Shades extends Obj{
 
-	public Shades(String name, int textureIndex) {
-		super(name, textureIndex);
+	public Shades(int textureIndex) {
+		super("Shade", textureIndex);
 		// TODO Auto-generated constructor stub
 	}
 

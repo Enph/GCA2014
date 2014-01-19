@@ -1,5 +1,7 @@
 package mapgeneration;
 
+import java.util.List;
+
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
@@ -9,14 +11,14 @@ import objects.Shades;
 
 public class BlackRoom extends Room{
 
-	private Shades shades[] = {new Shades("Lyden",10),new Shades("NightBringer",10)};
-	private Sage sage;
+	private Shades shades[] = {new Shades(10),new Shades(10)};
+	private Sage sage = new Sage();
 	
 	public BlackRoom(){
 		super(0,0,13,7);
 	}
 	
-	public boolean generate(Panel panel){
+	public boolean generate(List<Room> rooms,Panel panel){
 		for(int i=y;i<y+height;++i)
 		{
 			for(int j=x;j<x+width;++j)

@@ -119,23 +119,23 @@ public class Player extends Position implements Drawable{
 	}
 	
 	public void faceLeft(){
-		this.setTextureIndex(17);
+		this.setTextureIndex(25);
 		facing = 4;
 	}
 	
 	public void faceRight(){
-		this.setTextureIndex(16);
+		this.setTextureIndex(24);
 		facing = 2;
 	}
 
 	public void faceUp(){
-		this.setTextureIndex(18);
-		facing = 1;
+		this.setTextureIndex(27);
+		facing = 3;
 	}
 
 	public void faceDown(){
-		this.setTextureIndex(18);
-		facing = 3;
+		this.setTextureIndex(26);
+		facing = 1;
 	}
 	
 	public void darkness(Panel panel){
@@ -157,7 +157,7 @@ public class Player extends Position implements Drawable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if(!panel.getSquare(self).getVisible()){
+				if(!panel.getSquare(self.getX(),self.getY()).getVisible()){
 					loseHealth();
 					darkness(panel);
 				}

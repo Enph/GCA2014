@@ -6,22 +6,25 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
+
 import com.example.gca2014.Drawable;
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 public class Crystal extends Obj {
 	private int note;
-	public Crystal(int note) {
-		super("Crystal",16);
+	public Crystal(boolean good, int note) {
+		super("Crystal",good?17:16);
 		this.note = note;
 	}
 	@Override
 	public void onStep(Square on, Panel panel) {
+		panel.context.mRenderer.removeDrawable(this);
 		on.setObject(null);
+		setSquare(null);
 		panel.setOnCrystal(this);
 		panel.context.mRenderer.addDrawable(new Drawable(){
-
 			@Override
 			public void draw(GL10 gl) {
 				float[] vertices = new float[]{
