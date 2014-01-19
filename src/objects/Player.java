@@ -103,6 +103,10 @@ public class Player extends Position implements Drawable{
 		book.cast(square, panel);
 	}
 	
+	public void goodness(int badorgood){
+		goodnesslvl+=badorgood;
+	}
+	
 	public int getHealth(){
 		return health;
 	}
@@ -111,6 +115,7 @@ public class Player extends Position implements Drawable{
 		health--;
 		Log.d("loooooooose","health");
 		if(health==0){
+			//you die
 			Log.d("Dead","Dead");
 		}
 	}

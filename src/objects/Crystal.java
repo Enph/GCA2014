@@ -6,6 +6,8 @@ import java.nio.FloatBuffer;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import spells.Spell;
+
 import android.util.Log;
 
 import com.example.gca2014.Drawable;
@@ -14,9 +16,11 @@ import com.example.gca2014.Square;
 
 public class Crystal extends Obj {
 	private int note;
-	public Crystal(boolean good, int note) {
+	private Spell spell;
+	public Crystal(boolean good, int note,Spell spell) {
 		super("Crystal",good?25:24);
 		this.note = note;
+		this.spell = spell;
 	}
 	@Override
 	public void onStep(Square on, Panel panel) {
@@ -24,6 +28,7 @@ public class Crystal extends Obj {
 		on.setObject(null);
 		setSquare(null);
 		panel.setOnCrystal(this);
+		panel.getLyden().getSpellbook().add(spell);
 		panel.context.mRenderer.addDrawable(new Drawable(){
 			@Override
 			public void draw(GL10 gl) {
@@ -53,6 +58,8 @@ public class Crystal extends Obj {
 			public int textureSize() {
 				return getNote();
 			}});
+		
+		
 	}
 	public int getNote(){
 		return note;
