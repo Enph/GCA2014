@@ -8,10 +8,11 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.example.gca2014.Drawable;
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
-public abstract class Spell implements com.example.gca2014.Drawable{
+public abstract class Spell implements Drawable{
 	private String name;
 	private int texture;
 	private int cast;
@@ -57,5 +58,10 @@ public abstract class Spell implements com.example.gca2014.Drawable{
 	}
 	public int textureIndex(){
 		return texture;
+	}
+	@Override
+	public int textureSize() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

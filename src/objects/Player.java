@@ -24,17 +24,9 @@ public class Player extends Position implements Drawable{
 	private int health = 3;
 	private int facing = 1;
 
-	public Player(Square position, int index) {
-		super(position.getX(),position.getY());
-		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
-		byteBuffer.order(ByteOrder.nativeOrder());
-		vertexBuffer = byteBuffer.asFloatBuffer();
-		vertexBuffer.clear();
-		vertexBuffer.put(vertices);
-		vertexBuffer.position(0);
+	public Player(int x, int y, int index) {
+		super(x,y+1);
 		move(0,1);
-		setY(getY()-1);
-		setX(getX()+1);
 		this.index = index;
 		this.book = new Spellbook();
 		Spell light = new Light();
@@ -50,11 +42,21 @@ public class Player extends Position implements Drawable{
     		1.0f, 1.0f,		// top right	(V4)
     		1.0f, 0.0f		// bottom right	(V3)
     }; 
+    public void reset(){
+    	vertices = new float[]{
+    			-0.075f, -0.075f,  0.001f,		// V1 - bottom left
+    			-0.075f,  0.075f,  0.004f,		// V2 - top left
+    			 0.075f, -0.075f,  0.001f,		// V3 - bottom right
+    			 0.075f,  0.075f,  0.004f,		// V4 - top right
+                            
+    	};
+    	move(0,1);
+    }
 	protected float vertices[] = {
-			-0.075f, -0.075f,  0.0f,		// V1 - bottom left
-			-0.075f,  0.075f,  0.0f,		// V2 - top left
-			 0.075f, -0.075f,  0.0f,		// V3 - bottom right
-			 0.075f,  0.075f,  0.0f,		// V4 - top right
+			-0.075f, -0.075f,  0.001f,		// V1 - bottom left
+			-0.075f,  0.075f,  0.004f,		// V2 - top left
+			 0.075f, -0.075f,  0.001f,		// V3 - bottom right
+			 0.075f,  0.075f,  0.004f,		// V4 - top right
                         
 	};
 	public void move(int x, int y){
@@ -117,39 +119,35 @@ public class Player extends Position implements Drawable{
 	}
 	
 	public void faceLeft(){
-		this.setTextureIndex(47);
+		this.setTextureIndex(17);
 		facing = 4;
 	}
 	
 	public void faceRight(){
-		this.setTextureIndex(46);
+		this.setTextureIndex(16);
 		facing = 2;
 	}
 
 	public void faceUp(){
-		this.setTextureIndex(48);
+		this.setTextureIndex(18);
 		facing = 1;
 	}
 
 	public void faceDown(){
-		this.setTextureIndex(48);
+		this.setTextureIndex(18);
 		facing = 3;
 	}
 	
-	public void darkness(final Panel panel){
-		
+	public void darkness(Panel panel){
+		new DarknessThread(panel).start();
 	}
 	public class DarknessThread extends Thread {
 			int x;
 			int y;
-			int i;
-			int j;
 			Panel panel;
-			DarknessThread(int x, int y, Panel pane){
+			DarknessThread(Panel pane){
 				this.x = getX();
 				this.y = getY();
-				i=x;
-				j=y;
 				this.panel = pane;
 			}
 			@Override
@@ -159,10 +157,17 @@ public class Player extends Position implements Drawable{
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				if(panel.maze.get(y).get(x)){
-					
+				if(!panel.getSquare(self).getVisible()){
+					loseHealth();
+					darkness(panel);
 				}
 			};
+	}
+	Player self = this;
+	@Override
+	public int textureSize() {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 
 }

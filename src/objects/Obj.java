@@ -27,7 +27,7 @@ public abstract class Obj implements Drawable {
 
 	@Override
 	public void draw(GL10 gl) {
-		if(square!=null){
+		if(square!=null&&square.getVisible()){
 			float dx = 0.15f*(square.getX()-4);
 			float dy = 0.15f*(square.getY()-3);
 			vertices = new float[]{
@@ -45,13 +45,17 @@ public abstract class Obj implements Drawable {
 			vertexBuffer.position(0);
 			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 			gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
-			Panel.context.mRenderer.removeDrawable(this);
+			
 		}
 	}
 
 	@Override
 	public int textureIndex() {
 		return textureIndex;
+	}
+	@Override
+	public int textureSize() {
+		return 0;
 	}
 
 	public String getName(){
@@ -64,6 +68,7 @@ public abstract class Obj implements Drawable {
 	}
 
 	public void setSquare(Square square) {
+		Panel.context.mRenderer.removeDrawable(this);
 		this.square = square;
 	}
 

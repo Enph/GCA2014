@@ -3,6 +3,7 @@ package mapgeneration;
 import java.util.ArrayList;
 import java.util.List;
 
+import objects.Obj;
 import objects.Wall;
 
 import android.util.Log;
@@ -11,7 +12,7 @@ import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 public class Generator {
-	public List<Room> generate(Panel panel){
+	public List<Room> generate(Panel panel, List<Obj> mustHaves){
 		List<Room> all = new ArrayList<Room>();
 		List<Room> rooms = new ArrayList<Room>();
 		List<Hall> halls = new ArrayList<Hall>();
@@ -24,14 +25,26 @@ public class Generator {
 		for(Room room:all){
 			if(room.generate(rooms, panel)){
 				rooms.add(room);
+				
 			}
 		}
-		for(Room room:rooms){
+		for(Obj object:mustHaves){
+			Room hasItem = rooms.get((int) ((rooms.size()-1)*Math.random()+1));
+			int itemLocationX = (int) (hasItem.getX()+hasItem.getWidth()*Math.random());
+			int itemLocationY = (int) (hasItem.getY()+hasItem.getHeight()*Math.random());
+			panel.maze.get(itemLocationY).get(itemLocationX).setObject(object);
+		}
+		for(int i=0;i<rooms.size();++i){
+			Room room = rooms.get(i);
 			int tries = (int) (Math.random()+2);
 
 			while(tries>0)
 			{
-				Hall hall = new Hall(room,rooms.get((int) (rooms.size()*Math.random())));
+				int select=0;
+				do{
+					select=(int) (rooms.size()*Math.random());
+				}while(select==i);
+				Hall hall = new Hall(room,rooms.get(select));
 				if(hall.generate(rooms, panel)){
 					halls.add(hall);
 					--tries;
@@ -57,7 +70,8 @@ public class Generator {
 				//Log.d("things","j"+j+"i"+i);
 				if(isWall){
 					square.obstacle();
-					square.setTextureIndex(34+(int)(4*Math.random()));
+					square.setTextureIndex((int)(5*Math.random()));
+					square.setTextureSize(1);
 					//if(j-1>=0)Log.d("things",panel.maze.get(j-1).get(i).isObstacle()?"make wall":"dont make wall");
 					walls.add(square);
 					wallet.add(new Integer[]{j,i});
@@ -68,36 +82,36 @@ public class Generator {
 			if(wallet.get(i)[0]-1>=0&&!panel.maze.get(wallet.get(i)[0]-1).get(wallet.get(i)[1]).isObstacle()){
 				if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
 				{
-					walls.get(i).setObject(new Wall(43));
+					walls.get(i).setObject(new Wall(6));
 				}
 				else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
 				{
-					walls.get(i).setObject(new Wall(45));
+					walls.get(i).setObject(new Wall(8));
 				}
 				else {
-					walls.get(i).setObject(new Wall(44));
+					walls.get(i).setObject(new Wall(7));
 				}
 			}
 			else if(wallet.get(i)[0]+1<20&&!panel.maze.get(wallet.get(i)[0]+1).get(wallet.get(i)[1]).isObstacle()){
 				if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
 				{
-					walls.get(i).setObject(new Wall(38));
+					walls.get(i).setObject(new Wall(1));
 				}
 				else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
 				{
-					walls.get(i).setObject(new Wall(40));
+					walls.get(i).setObject(new Wall(3));
 				}
 				else {
-					walls.get(i).setObject(new Wall(39));
+					walls.get(i).setObject(new Wall(2));
 				}
 			}
 			else if(wallet.get(i)[1]-1>=0&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]-1).isObstacle())
 			{
-				walls.get(i).setObject(new Wall(41));
+				walls.get(i).setObject(new Wall(5));
 			}
 			else if(wallet.get(i)[1]+1<20&&!panel.maze.get(wallet.get(i)[0]).get(wallet.get(i)[1]+1).isObstacle())
 			{
-				walls.get(i).setObject(new Wall(42));
+				walls.get(i).setObject(new Wall(4));
 			}
 		}
 		return rooms;

@@ -8,13 +8,11 @@ import com.example.gca2014.Square;
 public class Portal extends Obj {
 	
 	public Portal(){
-		super("Portal",41);
+		super("Portal",5);
 	}
-
 	@Override
-	public void draw(GL10 gl) {
-		// TODO Auto-generated method stub
-		
+	public int textureSize(){
+		return 1;
 	}
 	
 	@Override

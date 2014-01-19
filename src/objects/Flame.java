@@ -37,5 +37,7 @@ public class Flame extends Obj {
 			}
 		}
 	}
+
+	
 	
 }

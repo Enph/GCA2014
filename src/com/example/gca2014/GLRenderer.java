@@ -67,11 +67,7 @@ public class GLRenderer implements Renderer {
 		gl.glLoadIdentity(); 					//Reset The Modelview Matrix
 	}
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {		
-		ByteBuffer byteBuffer = ByteBuffer.allocateDirect(12 * 4);
-		byteBuffer.order(ByteOrder.nativeOrder());
-		Square.textureBuffer = byteBuffer.asFloatBuffer();
-		Square.textureBuffer.put(Square.texture);
-		Square.textureBuffer.position(0);
+		ByteBuffer byteBuffer;
 		
 		byteBuffer = ByteBuffer.allocateDirect(12 * 4);
 		byteBuffer.order(ByteOrder.nativeOrder());
@@ -107,29 +103,25 @@ public class GLRenderer implements Renderer {
 		while(!context.glSurfaceView.ready){
 			
 		}
+		
 	}
 	public static int[] textures = new int[1];
     public static int textureSize=0;
     public void addDrawable(Drawable d){
-    	//Log.d("ratjug add", Integer.toString(d.textureIndex()));
-    	mDraws.get(d.textureIndex()).add(d);
+    	mDraws.get(d.textureSize()).get(d.textureIndex()).add(d);
     }
     public void removeDrawable(Drawable d){
-    	//Log.d("ratjug remove", Integer.toString(d.textureIndex()));
-    	mDraws.get(d.textureIndex()).remove(d);
+    	mDraws.get(d.textureSize()).get(d.textureIndex()).remove(d);
     }
     public void addAnimatable(Animatable d){
-    	//Log.d("ratjug add", Integer.toString(d.textureIndex()));
     	Animations.get(d.textureIndex()).add(d);
     }
     public void removeAnimatable(Animatable d){
-    	//Log.d("ratjug remove", Integer.toString(d.textureIndex()));
     	Animations.get(d.textureIndex()).remove(d);
     }
     private GL10 previousGL;
     public void blitGLTexture(int D, Context context) {
     	// loading texture
-    	//Log.d("ratjug",Integer.toString(D));
     	
     	int catcher[] = new int[3];
     		Bitmap bitmap = 
@@ -167,9 +159,8 @@ public class GLRenderer implements Renderer {
     	bitmap.recycle();
     	Animations.add(new AnimationArray(textures[0]));
     }
-    public void loadGLTexture(int D, Context context) {
+    public void loadGLTexture(int D, Context context, int k) {
     	// loading texture
-    	//Log.d("ratjug",Integer.toString(D));
     	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), D);
 
     	// generate one texture pointer
@@ -204,6 +195,9 @@ public class GLRenderer implements Renderer {
     	// Clean up
     	bitmap.recycle();
     	mDraws.add(new DrawArray( textures[0]));
+    	for(int i=0;i<k;++i){
+    		mDraws.get(mDraws.size()-1).add(new ArrayList<Drawable>());
+    	}
     	textureSize++;
     }
     public void display(GL10 gl){
@@ -211,29 +205,32 @@ public class GLRenderer implements Renderer {
         gl.glEnableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
         gl.glFrontFace(GL10.GL_CW);
     	for(int m=0;m<mDraws.size();m++)
-    		mDraws.get(m).display(gl);
+    		for(int n=0;n<mDraws.get(m).size();++n)
+    			mDraws.get(m).display(gl,n);
     	for(int m=0;m<Animations.size();m++)
     		Animations.get(m).display(gl);
     	gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
     }
-    public class DrawArray extends ArrayList<Drawable>{
+    public class DrawArray extends ArrayList<ArrayList<Drawable>>{
     	public DrawArray(int t){
     		super();
     		mTex = t;
     	}
     	int mTex;
     	float[] mColour;
-    	public void display(GL10 gl){
-    		//Log.d("ratjug display",Integer.toString(mTex));
+    	public void display(GL10 gl, int tex){
             gl.glBindTexture(GL10.GL_TEXTURE_2D, mTex);
-            // Point to our buffers
-            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, Square.textureBuffer);
-         
-            for(int m=0;m<size();m++){
-                get(m).draw(gl);
+            if(size()==64){
+            	gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, Square.textureBuffers[tex]);
             }
-            //Disable the client state before leaving
+            if(size()==1){
+            	gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, Square.textureBuffer);
+            }
+         
+            for(int m=0;m<get(tex).size();++m){
+                get(tex).get(m).draw(gl);
+            }
     		
         }
     }
@@ -252,7 +249,6 @@ public class GLRenderer implements Renderer {
             gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, Square.thirdBuffers[itr]);
             
             for(int m=0;m<size();m++){
-            	//Log.d("ratjug display",Integer.toString(mTex));
                 get(m).draw(gl);
             }
             //Disable the client state before leaving
@@ -262,9 +258,9 @@ public class GLRenderer implements Renderer {
     		itr+=dir;
         }
     }
-	public void clear(Integer... is) {
+	public void clear(int size, Integer... is) {
 		for(Integer i:is){
-			mDraws.get(i).clear();
+			mDraws.get(size).get(i).clear();
 		}
 	}
 }

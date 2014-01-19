@@ -36,14 +36,11 @@ public class MainActivity extends Activity {
        
         glSurfaceView.setRenderer(mRenderer);
         setContentView(glSurfaceView);
-        //mplayer=MediaPlayer.create(this, R.raw.tetris);
-        //mplayer.start();
     }
 
     public void onDestroy(){
         
         glSurfaceView.running=false;
-        //mplayer.release();
         super.onDestroy();
     }
 	/** Remember to resume the glSurface  */
