@@ -1,19 +1,16 @@
 package mapgeneration;
 
 import java.util.List;
-
 import objects.Crystal;
 import objects.Pedestal;
 import objects.Player;
 import objects.Shades;
-
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
 public class Basement extends Room {
 	
 	private Pedestal pedestals;
-	private Player lyden;
 	private Crystal crystal[] = {new Crystal(1),new Crystal(2)};
 	private Shades shades[] = {new Shades("Red",10),new Shades("Orange",10),new Shades("Yellow",10),
 								new Shades("Green",10),new Shades("Blue",10),new Shades("Purple",10)};

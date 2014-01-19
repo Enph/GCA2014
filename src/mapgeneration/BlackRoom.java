@@ -9,7 +9,6 @@ import objects.Shades;
 
 public class BlackRoom extends Room{
 
-	private Player lyden;
 	private Shades shades[] = {new Shades("Lyden",10),new Shades("NightBringer",10)};
 	private Sage sage;
 	
