@@ -22,6 +22,7 @@ public class Player extends Position implements Drawable{
 	private int index;
 	private Spellbook book;
 	private int health = 3;
+	private int goodnesslvl = 2;
 	private int facing = 1;
 
 	public Player(int x, int y, int index) {
@@ -44,10 +45,10 @@ public class Player extends Position implements Drawable{
     }; 
     public void reset(){
     	vertices = new float[]{
-    			-0.075f, -0.05f,  0.001f,		// V1 - bottom left
-    			-0.075f,  0.1f,  0.004f,		// V2 - top left
-    			 0.075f, -0.05f,  0.001f,		// V3 - bottom right
-    			 0.075f,  0.1f,  0.004f,		// V4 - top right
+    			-0.075f, -0.075f,  0.001f,		// V1 - bottom left
+    			-0.075f,  0.075f,  0.004f,		// V2 - top left
+    			 0.075f, -0.075f,  0.001f,		// V3 - bottom right
+    			 0.075f,  0.075f,  0.004f,		// V4 - top right
                             
     	};
     	move(0,1);
@@ -119,22 +120,22 @@ public class Player extends Position implements Drawable{
 	}
 	
 	public void faceLeft(){
-		this.setTextureIndex(61);
+		this.setTextureIndex(25);
 		facing = 4;
 	}
 	
 	public void faceRight(){
-		this.setTextureIndex(60);
+		this.setTextureIndex(24);
 		facing = 2;
 	}
 
 	public void faceUp(){
-		this.setTextureIndex(63);
+		this.setTextureIndex(27);
 		facing = 3;
 	}
 
 	public void faceDown(){
-		this.setTextureIndex(62);
+		this.setTextureIndex(26);
 		facing = 1;
 	}
 	
@@ -171,3 +172,4 @@ public class Player extends Position implements Drawable{
 	}
 
 }
+

@@ -1,5 +1,9 @@
 package spells;
 
+import objects.Boulder;
+import objects.Creature;
+import objects.Player;
+
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
 
@@ -10,9 +14,38 @@ public class Earth extends Spell{
 	}
 	
 	public void onClick(Square cast, Panel panel) {
-		if(cast.getObject().getName()=="Flame"){
-			cast.setObject(null);
+		Boulder boulder = new Boulder();
+		Player lyden = panel.getLyden();
+		if(lyden.getFacing()==1){
+			if(cast.getObject().getName() == "Creature"){
+				Creature monster = (Creature)(cast.getObject());
+				monster.move(0, 1, panel);
+			}
+			cast.setObject(boulder);
 		}
+		else if(lyden.getFacing()==2){
+			if(cast.getObject().getName() == "Creature"){
+				Creature monster = (Creature)(cast.getObject());
+				monster.move(1, 0, panel);
+			}
+			cast.setObject(boulder);
+		}
+		else if(lyden.getFacing()==3){
+			if(cast.getObject().getName() == "Creature"){
+				Creature monster = (Creature)(cast.getObject());
+				monster.move(0, -1, panel);
+			}
+			cast.setObject(boulder);
+		}
+		else{
+			if(cast.getObject().getName() == "Creature"){
+				Creature monster = (Creature)(cast.getObject());
+				monster.move(-1, 0, panel);
+			}
+			cast.setObject(boulder);
+		}
+		
+		
 	}
 	
 }

@@ -81,6 +81,10 @@ public abstract class Obj implements Drawable {
 		return false;
 	}
 	
+	public boolean breakable(){
+		return false;
+	}
+	
 	public void move(int x,int y, Panel panel){
 		
 		if(panel.getSquare(this.square.getX()+x, this.square.getY()+y).getObject() == null){

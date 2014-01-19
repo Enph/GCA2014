@@ -7,12 +7,14 @@ import com.example.gca2014.Square;
 
 public class Slash extends Spell{
 
-	public Slash(String name, int texture, int cast) {
-		super("Slash", texture, cast);
-		// TODO Auto-generated constructor stub
+	public Slash() {
+		super("Slash", 10, 10);
 	}
 	
 	public void onClick(Square cast, Panel panel){
+		if(cast.getObject().breakable() == true){
+			cast.setObject(null);
+		}
 		if(cast.getObject().getName()=="Creature"){
 			//get the creature clicked on from panel
 			Creature monster = (Creature)(cast.getObject());
