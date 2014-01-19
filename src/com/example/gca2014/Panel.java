@@ -119,6 +119,7 @@ SurfaceHolder.Callback {
 	int width = 20;
 	List<ArrayList<Square>> view = new ArrayList<ArrayList<Square>>();
 	public List<ArrayList<Square>> maze = new ArrayList<ArrayList<Square>>();
+	public List<List<ArrayList<Square>>> mazes = new ArrayList<List<ArrayList<Square>>>();
 
 	@TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
 	public void run()

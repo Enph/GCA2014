@@ -3,6 +3,8 @@ package objects;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.example.gca2014.Drawable;
+import com.example.gca2014.Panel;
+import com.example.gca2014.Square;
 
 public abstract class Obj implements Drawable {
 	private String name;
@@ -20,7 +22,14 @@ public abstract class Obj implements Drawable {
 		return textureIndex;
 	}
 	
+	public String getName(){
+		return name;
+	}
+	
 	public int getObjectIndex(){
 		return objId;
 	}
+	
+	public abstract void onStep(Square on, Panel panel);
+		
 }

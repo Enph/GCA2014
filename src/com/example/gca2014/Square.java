@@ -11,6 +11,8 @@ import java.util.Random;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import objects.Obj;
+
 import agency.Position;
 import android.util.Log;
 
@@ -20,6 +22,7 @@ public class Square extends Position implements Drawable{
    // public static float glConvert =200f;
   //  public static float xWidth=GLRenderer.mWidth/sizeFactor;
    // public static float yHeight=GLRenderer.mHeight/sizeFactor;
+	private Obj myobj = null; 
     public final static String LOG_TAG = "astrobridge: ";
     public int xvel=0,yvel=1;
     static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
@@ -148,4 +151,13 @@ public class Square extends Position implements Drawable{
 	public void setVisible(boolean b) {
 		isVisible = b;
 	}
+	
+	public Obj getObject(){
+		return myobj;
+	}
+	
+	public void setObject(Obj object){
+		myobj = object;
+	}
+	
 }

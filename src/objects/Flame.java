@@ -2,7 +2,11 @@ package objects;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import com.example.gca2014.Panel;
+import com.example.gca2014.Square;
+
 public class Flame extends Obj {
+	
 	public Flame(){
 		super("Flame",2,41);
 	}
@@ -12,4 +16,10 @@ public class Flame extends Obj {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void onStep(Square on, Panel panel) {
+		
+	}
+	
 }
