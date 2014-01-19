@@ -14,7 +14,7 @@ public class Basement extends Room {
 	
 	private Pedestal pedestals;
 	private Player lyden;
-	private Crystal crystal;
+	private Crystal crystal[] = {new Crystal(1),new Crystal(2)};
 	private Shades shades[] = {new Shades("Red",10),new Shades("Orange",10),new Shades("Yellow",10),
 								new Shades("Green",10),new Shades("Blue",10),new Shades("Purple",10)};
 	
@@ -48,12 +48,10 @@ public class Basement extends Room {
 		panel.maze.get(4).get(9).setObject(shades[4]);
 		panel.maze.get(3).get(11).setObject(shades[5]);
 		
-		panel.maze.get(3).get(6).setObject(shades[5]);
-		panel.maze.get(0).get(6).setObject(shades[5]);
+		panel.maze.get(3).get(6).setObject(crystal[1]);
+		panel.maze.get(0).get(6).setObject(crystal[2]);
 		
-		Square start = panel.maze.get(2).get(6);
-		
-		lyden = new Player(start,48);
+		lyden = new Player(6,2,48);
 		
 		return true;
 	}

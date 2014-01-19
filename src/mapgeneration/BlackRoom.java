@@ -34,9 +34,8 @@ public class BlackRoom extends Room{
 		panel.maze.get(5).get(8).setObject(shades[1]);
 		panel.maze.get(5).get(8).setVisible(true);
 		
-		Square start = panel.maze.get(2).get(6);
-		start.setVisible(true);
-		lyden = new Player(start,48);
+		panel.maze.get(2).get(6).setVisible(true);
+		lyden = new Player(6,2,48);
 		
 		return true;
 	}
