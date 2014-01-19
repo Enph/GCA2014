@@ -28,6 +28,7 @@ public class Basement extends Room {
 			for(int j=x;j<x+width;++j)
 			{
 				Square square = panel.maze.get(i).get(j);
+				square.setVisible(true);
 				add(square);
 			}
 		}
