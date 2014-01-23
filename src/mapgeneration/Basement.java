@@ -18,13 +18,13 @@ import com.example.gca2014.Square;
 public class Basement extends Room {
 	public static Portal[] portals = {
 		new Portal(null,1,true,null,1,1,1),
-		new Portal(null,2,true,null,1,0,0),
-		new Portal(null,3,true,null,0.75f,0.25f,0.0f),
-		new Portal(null,4,true,null,1f,1f,0.0f),
-		new Portal(null,5,true,null,0,1,0),
-		new Portal(null,6,true,null,0,0,1),
-		new Portal(null,7,true,null,0.5f,0,0.5f),
-		new Portal(null,8,true,null,0.3f,0.3f,0.3f)};
+		new Portal(null,2,false,null,1,0,0),
+		new Portal(null,3,false,null,0.75f,0.25f,0.0f),
+		new Portal(null,4,false,null,1f,1f,0.0f),
+		new Portal(null,5,false,null,0,1,0),
+		new Portal(null,6,false,null,0,0,1),
+		new Portal(null,7,false,null,0.5f,0,0.5f),
+		new Portal(null,8,false,null,0.3f,0.3f,0.3f)};
 	private Crystal crystal[] = {new Crystal(true,1,new Light()),new Crystal(false,2,new Slash())};
 	private Shades shades[] = {new Shades(2),new Shades(3),new Shades(4),
 								new Shades(5),new Shades(6),new Shades(7)};

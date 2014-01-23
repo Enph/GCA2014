@@ -59,11 +59,16 @@ public class Generator {
 			all.clear();
 		}
 		for(Obj object:mustHaves){
+			int itemLocationX, itemLocationY; 
+			do{
 			Room hasItem = rooms.get((int) ((rooms.size()-1)*Math.random())+1);
-			int itemLocationX = (int) (hasItem.getX()+hasItem.getWidth()*Math.random());
-			int itemLocationY = (int) (hasItem.getY()+hasItem.getHeight()*Math.random());
+			itemLocationX = (int) (hasItem.getX()+hasItem.getWidth()*Math.random());
+			itemLocationY = (int) (hasItem.getY()+hasItem.getHeight()*Math.random());
+			
+			}while(panel.maze.get(itemLocationY).get(itemLocationX)==null||panel.maze.get(itemLocationY).get(itemLocationX).isObstacle());
 			panel.maze.get(itemLocationY).get(itemLocationX).setObject(object);
 		}
+		panel.maze.get(2).get(4).setObject(mustHaves.get(0));
 		for(int i=0;i<rooms.size();++i){
 			Room room = rooms.get(i);
 			int tries = (int) (Math.random()+2);

@@ -30,7 +30,7 @@ public class Square extends Position implements Drawable{
 	static public float textures[][];
 	static public float texture[];
 	static public FloatBuffer textureBuffer;
-
+	
 	public static FloatBuffer[] textureBuffers; 
 
 
@@ -73,7 +73,7 @@ public class Square extends Position implements Drawable{
 					(1f+i)/8f, (1f+j)/8f,		// top right	(V4)
 					(1f+i)/8f, j/8f		// bottom right	(V3)
 			};
-
+			
 			ByteBuffer byteBuffer = ByteBuffer.allocateDirect(12 * 4);
 			byteBuffer.order(ByteOrder.nativeOrder());
 			Square.textureBuffers[t] = byteBuffer.asFloatBuffer();
@@ -132,17 +132,17 @@ public class Square extends Position implements Drawable{
 	}
 	public void move(int x, int y){
 
-		float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
-		for(int m=0;m<4;m++){
-			vertices[m*3+1]+=tX;
-			myOutline.vertices[m*3+1]=vertices[m*3+1];
-		}
-		float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
-		for(int m=0;m<4;m++){
-			vertices[m*3]+=tY;
-			myOutline.vertices[m*3]=vertices[m*3];
-		}
-
+			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
+			for(int m=0;m<4;m++){
+				vertices[m*3+1]+=tX;
+				myOutline.vertices[m*3+1]=vertices[m*3+1];
+			}
+			float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
+			for(int m=0;m<4;m++){
+				vertices[m*3]+=tY;
+				myOutline.vertices[m*3]=vertices[m*3];
+			}
+		
 
 		setX(getX()+x);
 		setY(getY()+y);
@@ -176,7 +176,7 @@ public class Square extends Position implements Drawable{
 	public void setVisible(boolean b) {
 		isVisible = b;
 	}
-
+	
 	public void makeOutline(){
 
 		if(isVisible){
@@ -223,7 +223,7 @@ public class Square extends Position implements Drawable{
 			this.texture = (int) (45+Math.random()*3);
 			this.canDraw = false;
 		}
-
+		
 		@Override
 		public void draw(GL10 gl) {
 			if(canDraw){
@@ -242,10 +242,10 @@ public class Square extends Position implements Drawable{
 		public int textureSize() {
 			return 1;
 		}
-
+		
 		public void canDraw(){
 			canDraw  = true;
 		}
-
+		
 	}
 }

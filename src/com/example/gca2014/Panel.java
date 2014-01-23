@@ -86,7 +86,7 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_1a_lyden_hub, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_1b_nb_hub, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_2a_lyden_white, context, 1);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_2b_lyden_white, context, 1);/*
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_2b_lyden_white, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_3a_nb_red, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_3b_nb_red, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_4a_lyden_orange, context, 1);
@@ -97,7 +97,7 @@ SurfaceHolder.Callback {
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_6c_anon_green, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_7a_lyden_blue, context, 1);
 		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_7b_nb_blue, context, 1);
-		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_8a_lyden_purple, context, 1);*/
+		context.mRenderer.loadGLTexture(com.example.gca2014.R.drawable.note_8a_lyden_purple, context, 1);
 		
 
 		lyden = new objects.Player(4,1,62);
@@ -158,64 +158,71 @@ SurfaceHolder.Callback {
 		
 		//White Room 52-56
 		maze = this.mazesloop(52,56);
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,2,true,Basement.portals[1],1,0,0), new Crystal(true,3,null), new Crystal(true,3,null)));
+		Portal start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,2,true,Basement.portals[1],1,0,0), new Crystal(true,3,null), new Crystal(true,3,null)));
 		gen.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Red Room 27-31
 		maze = this.mazesloop(27,31);
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
 		//add pressure plate to gain access to certain room
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,3,true,Basement.portals[2],0.75f,0.25f,0), new Crystal(true,4,new Earth()), new Crystal(true,5,null)));
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,3,true,Basement.portals[2],0.75f,0.25f,0), new Crystal(true,4,new Earth()), new Crystal(true,5,null)));
 		gen.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Orange Room 57-61 for floors, 4-8 for fire walls
 		maze = this.mazesloop(57,61);
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
 		//add pressure plate to gain access to certain room, teddy bear
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,4,true,Basement.portals[3],1,1,0), new Crystal(true,6,null), new Crystal(true,8,null),new Flame()));
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,4,true,Basement.portals[3],1,1,0), new Crystal(true,6,null), new Crystal(true,8,null),new Flame()));
 		Generator gener = new Generator(4,0);
 		gener.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Yellow Room 4-8 sand floors
 		maze = this.mazesloop(4,8);
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,5,true,Basement.portals[4],0f,1f,0),new Crystal(true,7,null)));
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,5,true,Basement.portals[4],0f,1f,0),new Crystal(true,7,null)));
 		gen.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Green Room 33-37
 		maze = this.mazesloop(33,37);
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,6,true,Basement.portals[5],0,0,1),new Crystal(true,9,null),new Crystal(true,10,null), new Crystal(true,11,null),new Wood()));
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,6,true,Basement.portals[5],0,0,1),new Crystal(true,9,null),new Crystal(true,10,null), new Crystal(true,11,null),new Wood()));
 		gen.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Blue Room 57-61 for floors, 0-3 for water
 		maze = this.mazesloop(57,61);
 		//flowing water u can block with boulder
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,7,true,Basement.portals[6],1,0,1),new Crystal(true,12,null),new Crystal(true,13,new Water())));
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,7,true,Basement.portals[6],1,0,1),new Crystal(true,12,null),new Crystal(true,13,new Water())));
 		Generator gene = new Generator(0,0,4);
 		gene.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Purple Room 38-42
 		maze = this.mazesloop(38,42);
-		mustHaves.addAll(Arrays.asList(new Portal(null,0,true,null,0.5f,0.5f,0.5f),new Portal(null,8,true,Basement.portals[7],0.25f,0.25f,0.25f),new Crystal(true,14,null), new Sage()));
+		start = new Portal(null,0,true,null,0.5f,0.5f,0.5f);
+		mustHaves.addAll(Arrays.asList(start,new Portal(null,8,true,Basement.portals[7],0.25f,0.25f,0.25f),new Crystal(true,14,null), new Sage()));
 		gen.generateRandom(this, mustHaves);
 		mazes.add(maze);
 		mustHaves.clear();
-		mazeStartLocations.add(new Position(4,2));
+		mazeStartLocations.add(start.getSquare());
 		
 		//Black Room
 		maze = this.mazesloop(52,56);
@@ -240,7 +247,19 @@ SurfaceHolder.Callback {
 	public void reputPlayer(int x, int y){
 
 		viewX = x-4;
+		if(viewX+4+4>=width){
+			viewX = width-1-8;
+		}
+		else if(viewX<0){
+			viewX = 0;
+		}
 		viewY = y-2;
+		if(viewY+2+2>=height){
+			viewY = height-1-4;
+		}
+		else if(viewY<0){
+			viewY = 0;
+		}
 		lyden.setX(4);
 		lyden.setY(2);
 		lyden.reset();

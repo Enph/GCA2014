@@ -28,21 +28,21 @@ public class Portal extends Obj {
 
 	@Override
 	public void onStep(Square on, Panel panel) {
-		if(spell != null){
-			panel.getLyden().getSpellbook().add(spell);
+		if(active){
+			if(spell != null){
+				panel.getLyden().getSpellbook().add(spell);
+			}
+			if(dependant!=null){
+				dependant.activate();
+			}
+			panel.run(to);
 		}
-		if(dependant!=null){
-			dependant.activate();
-		}
-		panel.run(to);		
 	}
 
 	private void activate() {
-		if(active){
-			Panel.context.mRenderer.removeDrawable(this);
-			active = true;
-			Panel.context.mRenderer.addDrawable(this);
-		}
+		Panel.context.mRenderer.removeDrawable(this);
+		active = true;
+		Panel.context.mRenderer.addDrawable(this);
 	}
 
 	@Override
