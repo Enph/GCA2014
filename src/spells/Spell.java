@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.microedition.khronos.opengles.GL10;
 
+import android.util.Log;
+
 import com.example.gca2014.Drawable;
 import com.example.gca2014.Panel;
 import com.example.gca2014.Square;
@@ -62,6 +64,7 @@ public abstract class Spell implements Drawable{
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 		gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
 	}
+	@Override
 	public int textureIndex(){
 		return texture;
 	}

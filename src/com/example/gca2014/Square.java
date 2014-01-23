@@ -22,34 +22,15 @@ public class Square extends Position implements Drawable{
 	// public static float glConvert =200f;
 	//  public static float xWidth=GLRenderer.mWidth/sizeFactor;
 	// public static float yHeight=GLRenderer.mHeight/sizeFactor;
-	private Obj myobj = null; 
+	private Obj myobj = null;
+	private Outline myOutline;
 	public final static String LOG_TAG = "astrobridge: ";
 	public int xvel=0,yvel=1;
 	//static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
 	static public float textures[][];
 	static public float texture[];
 	static public FloatBuffer textureBuffer;
-	static public FloatBuffer thirdBuffers[]= new FloatBuffer[3];	// buffer holding the texture coordinates
-	static public float textureThirds[][] = new float[][] {
-		new float[]{
-				0.0f, 1,		// top left		(V2)
-				0.0f, 0.0f,		// bottom left	(V1)
-				1f/3f, 1,		// top right	(V4)
-				1f/3f, 0.0f		// bottom right	(V3)
-		},
-		new float[]{
-				1f/3f, 1.0f,		// top left		(V2)
-				1f/3f, 0.0f,		// bottom left	(V1)
-				2f/3f, 1.0f,		// top right	(V4)
-				2f/3f, 0.0f		// bottom right	(V3)
-		},
-		new float[]{
-				2f/3f, 1.0f,		// top left		(V2)
-				2f/3f, 0.0f,		// bottom left	(V1)
-				1.0f, 1.0f,		// top right	(V4)
-				1.0f, 0.0f		// bottom right	(V3)
-		},
-	};
+
 	public static FloatBuffer[] textureBuffers; 
 
 
@@ -92,7 +73,7 @@ public class Square extends Position implements Drawable{
 					(1f+i)/8f, (1f+j)/8f,		// top right	(V4)
 					(1f+i)/8f, j/8f		// bottom right	(V3)
 			};
-			
+
 			ByteBuffer byteBuffer = ByteBuffer.allocateDirect(12 * 4);
 			byteBuffer.order(ByteOrder.nativeOrder());
 			Square.textureBuffers[t] = byteBuffer.asFloatBuffer();
@@ -114,13 +95,14 @@ public class Square extends Position implements Drawable{
 	}
 	public Square(int x, int y, int t) {
 		super(4,3);
+		myOutline = new Outline();
 		move(x,y);
 		mTexture=t;
-
 	}
 
 	public Square(Square s) {
 		super(0,0);
+		myOutline = s.myOutline;
 		move(s.getX(),s.getY());
 		isVisible = s.isVisible;
 		mTexture = s.mTexture;
@@ -136,6 +118,7 @@ public class Square extends Position implements Drawable{
 
 	public Square(Square square, int x, int y) {
 		super(4,3);
+		myOutline = square.myOutline;
 		move(x,y);
 		this.isVisible = square.isVisible;
 		mTexture = square.mTexture;
@@ -149,18 +132,17 @@ public class Square extends Position implements Drawable{
 	}
 	public void move(int x, int y){
 
-		if(x!=0){
-			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
-			for(int m=0;m<4;m++){
-				vertices[m*3+1]+=tX;
-			}
+		float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
+		for(int m=0;m<4;m++){
+			vertices[m*3+1]+=tX;
+			myOutline.vertices[m*3+1]=vertices[m*3+1];
 		}
-		if(y!=0){
-			float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
-			for(int m=0;m<4;m++){
-				vertices[m*3]+=tY;
-			}
+		float tY = ((float)y)*0.15f;//*sizeFactor/glConvert;
+		for(int m=0;m<4;m++){
+			vertices[m*3]+=tY;
+			myOutline.vertices[m*3]=vertices[m*3];
 		}
+
 
 		setX(getX()+x);
 		setY(getY()+y);
@@ -170,6 +152,12 @@ public class Square extends Position implements Drawable{
 		vertexBuffer.clear();
 		vertexBuffer.put(vertices);
 		vertexBuffer.position(0);
+		byteBuffer = ByteBuffer.allocateDirect(myOutline.vertices.length * 4);
+		byteBuffer.order(ByteOrder.nativeOrder());
+		myOutline.vertexBuffer = byteBuffer.asFloatBuffer();
+		myOutline.vertexBuffer.clear();
+		myOutline.vertexBuffer.put(myOutline.vertices);
+		myOutline.vertexBuffer.position(0);
 	}
 
 	public boolean equals(Object O){
@@ -182,11 +170,21 @@ public class Square extends Position implements Drawable{
 		{
 			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
 			gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
-			
+			myOutline.canDraw();
 		}
 	}
 	public void setVisible(boolean b) {
 		isVisible = b;
+	}
+
+	public void makeOutline(){
+
+		if(isVisible){
+			Panel.context.mRenderer.addDrawable(myOutline);
+		}
+		else {
+			Panel.context.mRenderer.removeDrawable(myOutline);
+		}
 	}
 
 	public Obj getObject(){
@@ -209,5 +207,45 @@ public class Square extends Position implements Drawable{
 			myobj.onStep(this, panel);
 		}
 	}
+	public class Outline implements Drawable {
+		public FloatBuffer vertexBuffer;
+		public float vertices[] = {
+				-0.075f, -0.075f,  0.0015f,		// V1 - bottom left
+				-0.075f,  0.075f,  0.0015f,		// V2 - top left
+				0.075f, -0.075f,  0.0015f,		// V3 - bottom right
+				0.075f,  0.075f,  0.0015f,		// V4 - top right
 
+		};
+
+		int texture;
+		private boolean canDraw;
+		public Outline(){
+			this.texture = (int) (45+Math.random()*3);
+			this.canDraw = false;
+		}
+
+		@Override
+		public void draw(GL10 gl) {
+			if(canDraw){
+				gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+				gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+				canDraw = false;
+			}
+		}
+
+		@Override
+		public int textureIndex() {
+			return texture;
+		}
+
+		@Override
+		public int textureSize() {
+			return 1;
+		}
+
+		public void canDraw(){
+			canDraw  = true;
+		}
+
+	}
 }

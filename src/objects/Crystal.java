@@ -19,7 +19,7 @@ public class Crystal extends Obj {
 	private Spell spell;
 	public Crystal(boolean good, int note,Spell spell) {
 		super("Crystal",good?25:24);
-		this.note = note;
+		this.note = note+3;
 		this.spell = spell;
 	}
 	@Override
@@ -35,10 +35,10 @@ public class Crystal extends Obj {
 			@Override
 			public void draw(GL10 gl) {
 				float[] vertices = new float[]{
-						-0.075f*9f, -0.075f*5f,  0.006f,		// V1 - bottom left
-						-0.075f*9f,  0.075f*5f,  0.006f,		// V2 - top left
-						0.075f*9f, -0.075f*5f,  0.006f,		// V3 - bottom right
-						0.075f*9f,  0.075f*5f,  0.006f,		// V4 - top right
+						-0.075f*9f, -0.075f*5f,  0.007f,		// V1 - bottom left
+						-0.075f*9f,  0.075f*5f,  0.007f,		// V2 - top left
+						0.075f*9f, -0.075f*5f,  0.007f,		// V3 - bottom right
+						0.075f*9f,  0.075f*5f,  0.007f,		// V4 - top right
 
 				};
 				ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);

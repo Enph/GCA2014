@@ -45,13 +45,12 @@ public class Spellbook extends ArrayList<Spell>{
 	}
 	public void cast(Square square, Panel panel){
 		if(selected!=null){
-			square.setVisible(true);
+			selected.onClick(square, panel);
 		}
 	}
 
 	@Override
 	public boolean add(Spell spell){
-		
 		while(selected!=null){
 			selected = null;
 			for(Spell s:this){

@@ -12,6 +12,9 @@ public class Fire extends Spell{
 	}
 	
 	public void onClick(Square cast, Panel panel) {
+		if(cast.getObject()==null){
+			return;
+		}
 		if(cast.getObject().burnable() == true){
 			cast.setObject(null);
 		}

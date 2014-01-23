@@ -1,6 +1,9 @@
 package com.example.gca2014;
  
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.ArrayList;
@@ -24,12 +27,8 @@ import android.util.Log;
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class GLRenderer implements Renderer {
 	private MainActivity 	context;
-	public static float mWidth=400;
-	public static float mHeight=240;
-	public static float aspectRatio=2f/3f;
 
     private ArrayList<DrawArray> mDraws=new ArrayList<DrawArray>();
-    private ArrayList<AnimationArray> Animations=new ArrayList<AnimationArray>();
 	public GLRenderer(MainActivity context) {
 		this.context = context;
 	}
@@ -41,15 +40,15 @@ public class GLRenderer implements Renderer {
 		gl.glLoadIdentity();
 
 		// Drawing
-		gl.glTranslatef(0.0f, 0.0f, -0.9175f);		// move 5 units INTO the screen
+		gl.glTranslatef(0.0f, 0.0f, -0.9175f);
 		synchronized(context){
 		display(gl);
 		}
 	}
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		previousGL = gl;
-		mWidth=((float)context.glSurfaceView.getMeasuredWidthAndState());
-		mHeight=((float)context.glSurfaceView.getMeasuredHeightAndState());
+		float mWidth=((float)context.glSurfaceView.getMeasuredWidthAndState());
+		float mHeight=((float)context.glSurfaceView.getMeasuredHeightAndState());
 		//aspectRatio = mWidth/mHeight;
 		if(height == 0) { 						//Prevent A Divide By Zero By
 			height = 1; 						//Making Height Equal One
@@ -60,7 +59,7 @@ public class GLRenderer implements Renderer {
 		gl.glLoadIdentity(); 					//Reset The Projection Matrix
 
 		//Calculate The Aspect Ratio Of The Window
-		GLU.gluPerspective(gl, 45.0f, (float)width / (float)height, 0.1f, 100.0f);
+		GLU.gluPerspective(gl, 45.0f, (float)mWidth / (float)mHeight, 0.1f, 100.0f);
 		
         
 		gl.glMatrixMode(GL10.GL_MODELVIEW); 	//Select The Modelview Matrix
@@ -69,21 +68,6 @@ public class GLRenderer implements Renderer {
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {		
 		ByteBuffer byteBuffer;
 		
-		byteBuffer = ByteBuffer.allocateDirect(12 * 4);
-		byteBuffer.order(ByteOrder.nativeOrder());
-		Square.thirdBuffers[0] = byteBuffer.asFloatBuffer();
-		Square.thirdBuffers[0].put(Square.textureThirds[0]);
-		Square.thirdBuffers[0].position(0);
-		byteBuffer = ByteBuffer.allocateDirect(12 * 4);
-		byteBuffer.order(ByteOrder.nativeOrder());
-		Square.thirdBuffers[1] = byteBuffer.asFloatBuffer();
-		Square.thirdBuffers[1].put(Square.textureThirds[1]);
-		Square.thirdBuffers[1].position(0);
-		byteBuffer = ByteBuffer.allocateDirect(12 * 4);
-		byteBuffer.order(ByteOrder.nativeOrder());
-		Square.thirdBuffers[2] = byteBuffer.asFloatBuffer();
-		Square.thirdBuffers[2].put(Square.textureThirds[2]);
-		Square.thirdBuffers[2].position(0);
 		// Load the texture for the square
 		
 		gl.glEnable(GL10.GL_TEXTURE_2D);			//Enable Texture Mapping ( NEW )
@@ -113,52 +97,7 @@ public class GLRenderer implements Renderer {
     public void removeDrawable(Drawable d){
     	mDraws.get(d.textureSize()).get(d.textureIndex()).remove(d);
     }
-    public void addAnimatable(Animatable d){
-    	Animations.get(d.textureIndex()).add(d);
-    }
-    public void removeAnimatable(Animatable d){
-    	Animations.get(d.textureIndex()).remove(d);
-    }
     private GL10 previousGL;
-    public void blitGLTexture(int D, Context context) {
-    	// loading texture
-    	
-    	int catcher[] = new int[3];
-    		Bitmap bitmap = 
-      	    	  BitmapFactory.decodeResource(context.getResources(), D);
-    	// generate one texture pointer
-    	previousGL.glGenTextures(1, textures, 0);
-    	// ...and bind it to our array
-    	previousGL.glBindTexture(GL10.GL_TEXTURE_2D, textures[0]);
-
-    	// create nearest filtered texture
-    	previousGL.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MIN_FILTER, GL10.GL_SMOOTH);
-    	previousGL.glTexParameterf(GL10.GL_TEXTURE_2D, GL10.GL_TEXTURE_MAG_FILTER, GL10.GL_SMOOTH);
-
-    	// Use Android GLUtils to specify a two-dimensional texture image from our bitmap
-    	GLUtils.texImage2D(GL10.GL_TEXTURE_2D, 0, bitmap, 0);
-    	ByteBuffer imageBuffer = ByteBuffer.allocateDirect(bitmap.getHeight() * bitmap.getWidth() * 4);
-    	imageBuffer.order(ByteOrder.nativeOrder());
-    	byte buffer[] = new byte[4];
-    	for(int i = 0; i < bitmap.getHeight(); i++)
-    	{
-    		for(int j = 0; j < bitmap.getWidth(); j++)
-    		{
-    			int color = bitmap.getPixel(j, i);
-    			buffer[0] = (byte)Color.red(color);
-    			buffer[1] = (byte)Color.green(color);
-    			buffer[2] = (byte)Color.blue(color);
-    			buffer[3] = (byte)Color.alpha(color);
-    			imageBuffer.put(buffer);
-    		}
-    	}
-    	imageBuffer.position(0);
-    	previousGL.glTexImage2D(GL10.GL_TEXTURE_2D, 0, GL10.GL_RGBA, bitmap.getWidth(), bitmap.getHeight(), 0, GL10.GL_RGBA, GL10.GL_UNSIGNED_BYTE,imageBuffer);
-    	
-    	// Clean up
-    	bitmap.recycle();
-    	Animations.add(new AnimationArray(textures[0]));
-    }
     public void loadGLTexture(int D, Context context, int k) {
     	// loading texture
     	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), D);
@@ -207,8 +146,6 @@ public class GLRenderer implements Renderer {
     	for(int m=0;m<mDraws.size();m++)
     		for(int n=0;n<mDraws.get(m).size();++n)
     			mDraws.get(m).display(gl,n);
-    	for(int m=0;m<Animations.size();m++)
-    		Animations.get(m).display(gl);
     	gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
 		gl.glDisableClientState(GL10.GL_TEXTURE_COORD_ARRAY);
     }
@@ -232,30 +169,6 @@ public class GLRenderer implements Renderer {
                 get(tex).get(m).draw(gl);
             }
     		
-        }
-    }
-    public class AnimationArray extends ArrayList<Drawable>{
-    	public AnimationArray(int t){
-    		super();
-    		mTex = t;
-    	}
-    	int mTex;
-    	public int itr=1;
-    	public int dir=1;
-    	float[] mColour;
-    	public void display(GL10 gl){
-    		
-            gl.glBindTexture(GL10.GL_TEXTURE_2D, mTex);
-            gl.glTexCoordPointer(2, GL10.GL_FLOAT, 0, Square.thirdBuffers[itr]);
-            
-            for(int m=0;m<size();m++){
-                get(m).draw(gl);
-            }
-            //Disable the client state before leaving
-    		
-    		if(itr==2||itr==0)
-    			dir*=-1;
-    		itr+=dir;
         }
     }
 	public void clear(int size, Integer... is) {

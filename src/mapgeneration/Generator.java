@@ -41,22 +41,25 @@ public class Generator {
 		return rooms;
 	}
 	public List<Room> generateRandom(Panel panel, List<Obj> mustHaves){
-		
+
 		List<Room> all = new ArrayList<Room>();
 		List<Room> rooms = new ArrayList<Room>();
 		List<Hall> halls = new ArrayList<Hall>();
-		all.add(new Room(3,0,3,3));
-		for(int i = 0;i<16;++i){
-			all.add(new Room());
-		}
-		for(Room room:all){
-			if(room.generate(rooms, panel)){
-				rooms.add(room);
-				
+		while(rooms.size()<=3){
+			all.add(new Room(3,0,3,3));
+			for(int i = 0;i<16;++i){
+				all.add(new Room());
 			}
+			for(Room room:all){
+				if(room.generate(rooms, panel)){
+					rooms.add(room);
+
+				}
+			}
+			all.clear();
 		}
 		for(Obj object:mustHaves){
-			Room hasItem = rooms.get((int) ((rooms.size()-1)*Math.random()+1));
+			Room hasItem = rooms.get((int) ((rooms.size()-1)*Math.random())+1);
 			int itemLocationX = (int) (hasItem.getX()+hasItem.getWidth()*Math.random());
 			int itemLocationY = (int) (hasItem.getY()+hasItem.getHeight()*Math.random());
 			panel.maze.get(itemLocationY).get(itemLocationX).setObject(object);
@@ -78,7 +81,7 @@ public class Generator {
 				}
 			}
 		}
-		
+
 		makeWalls(rooms,halls,panel);
 		return rooms;
 	}

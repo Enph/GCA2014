@@ -12,6 +12,9 @@ public class Slash extends Spell{
 	}
 	
 	public void onClick(Square cast, Panel panel){
+		if(cast.getObject()==null){
+			return;
+		}
 		if(cast.getObject().breakable() == true){
 			cast.setObject(null);
 		}

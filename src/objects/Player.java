@@ -21,8 +21,7 @@ public class Player extends Position implements Drawable{
 	
 	private int index;
 	private Spellbook book;
-	private int health = 3;
-	private int goodnesslvl = 2;
+	private Heart heart;
 	private int facing = 1;
 
 	public Player(int x, int y, int index) {
@@ -30,6 +29,8 @@ public class Player extends Position implements Drawable{
 		move(0,1);
 		this.index = index;
 		this.book = new Spellbook();
+		this.heart = new Heart();
+		this.heart.refresh();
 	}
 	private FloatBuffer vertexBuffer;
 	static public FloatBuffer textureBuffer;	// buffer holding the texture coordinates
@@ -57,6 +58,7 @@ public class Player extends Position implements Drawable{
 			 0.075f,  0.075f,  0.004f,		// V4 - top right
                         
 	};
+	
 	public void move(int x, int y){
 		if(x!=0){
 			float tX = ((float)x)*0.15f;//*sizeFactor/glConvert;
@@ -100,18 +102,14 @@ public class Player extends Position implements Drawable{
 		book.cast(square, panel);
 	}
 	
-	public void goodness(int badorgood){
-		goodnesslvl+=badorgood;
-	}
-	
 	public int getHealth(){
-		return health;
+		return heart.getHealth();
 	}
 	
 	public void loseHealth(){
-		health--;
+		heart.loseHealth();
 		Log.d("loooooooose","health");
-		if(health==0){
+		if(getHealth()==0){
 			//you die
 			Log.d("Dead","Dead");
 		}
@@ -175,6 +173,73 @@ public class Player extends Position implements Drawable{
 
 	public Spellbook getSpellbook() {
 		return book;
+	}
+
+	public void refreshHeart(){
+		heart.refresh();
+	}
+	
+	public class Heart implements Drawable{
+		private int texture;
+
+		private int health = 3;
+		private int good = 2;
+		
+		private FloatBuffer vertexBuffer;	// buffer holding the vertices
+
+		protected float vertices[] = {
+				-0.075f+0.6f, -0.075f-0.3f,  0.006f,		// V1 - bottom left
+				-0.075f+0.6f,  0.075f-0.3f,  0.006f,		// V2 - top left
+				0.075f+0.6f, -0.075f-0.3f,  0.006f,		// V3 - bottom right
+				0.075f+0.6f,  0.075f-0.3f,  0.006f,		// V4 - top right
+
+		};
+		public Heart(){
+			texture = 0;
+		}
+		
+		public void draw(GL10 gl){
+			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vertexBuffer);
+			gl.glDrawArrays(GL10.GL_TRIANGLE_STRIP, 0, vertices.length / 3);
+		}
+		@Override
+		public int textureIndex(){
+			if(health<=0){
+				return texture+18;
+			}
+			return texture+6*(3-health)+good;
+		}
+		@Override
+		public int textureSize() {
+			return 3;
+		}
+
+		public int getHealth() {
+			return health;
+		}
+
+		public void loseHealth() {
+
+			Panel.context.mRenderer.removeDrawable(this);
+			health--;
+			refresh();
+		}
+		public void refresh(){
+			Panel.context.mRenderer.removeDrawable(this);
+			Panel.context.mRenderer.addDrawable(this);
+
+			ByteBuffer byteBuffer = ByteBuffer.allocateDirect(vertices.length * 4);
+			byteBuffer.order(ByteOrder.nativeOrder());
+			vertexBuffer = byteBuffer.asFloatBuffer();
+			vertexBuffer.clear();
+			vertexBuffer.put(vertices);
+			vertexBuffer.position(0);
+		}
+		public void changeGoodness(int change){
+			Panel.context.mRenderer.removeDrawable(this);
+			good+=change;
+			refresh();
+		}
 	}
 
 }

@@ -14,6 +14,9 @@ public class Water extends Spell{
 	
 	@Override
 	public void onClick(Square cast, Panel panel) {
+		if(cast.getObject()==null){
+			return;
+		}
 		Player lyden = panel.getLyden();
 		if(cast.getObject().getName()=="Flame"){
 			cast.setObject(null);
